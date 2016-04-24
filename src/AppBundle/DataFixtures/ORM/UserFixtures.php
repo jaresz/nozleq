@@ -19,7 +19,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
         $usrFx[$unr]->setLastName("Główny");
         $usrFx[$unr]->setEmail("admin@listy.internetowe.pl");
         $usrFx[$unr]->setEnabled(true);
-        $usrFx[$unr]->setIsAdmin(true);
+        $usrFx[$unr]->setAdmin(true); 
         $usrFx[$unr]->setPlainPassword("RazZimelen(ioWy)45!");        
         $manager->persist($usrFx[$unr]);
         $usrFx[$unr]->addRole('ROLE_ADMIN');

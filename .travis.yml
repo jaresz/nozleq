@@ -10,16 +10,17 @@ php:
   - 7.0
   
 env:
-  - SYMFONY_VERSION="2.4.*" DB=mysql
-  - SYMFONY_VERSION="2.8.*" DB=mysql
-  - SYMFONY_VERSION="dev-master" DB=mysql
-  
+  - SYMFONY_VERSION=2.3.*
+  - SYMFONY_VERSION=2.8.*
+  - SYMFONY_VERSION=dev-master
+
 before_install:
   - mysql -e 'create database hotel1_test;'
   
 before_script:
   - cp app/config/parameters.yml.travis app/config/parameters.yml
-  - composer install
+  - composer require symfony/symfony:${SYMFONY_VERSION}
+#  - composer install
   - php app/console doctrine:schema:create --env=test
   - php app/console doctrine:fixtures:load -n --env=test
 
@@ -28,3 +29,7 @@ script:
 
 notifications:
   email: tarviz@listy.internetowe.pl
+  
+matrix:
+  allow_failures:
+    - env: SYMFONY_VERSION=dev-master

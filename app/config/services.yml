@@ -15,4 +15,3 @@ services:
         class: AppBundle\Form\Type\ProfileExtendedType
         tags:
             - { name: form.type, alias: app_user_profile_extended }
-            

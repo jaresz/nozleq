@@ -30,6 +30,7 @@ framework:
     session:
         # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
+        name: "NOZLEGSESSION"
     fragments:       ~
     http_method_override: true
 
@@ -129,4 +130,4 @@ assetic:
             inputs:
                 - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"
             output: "fonts/glyphicons-halflings-regular.woff2"
-    
+

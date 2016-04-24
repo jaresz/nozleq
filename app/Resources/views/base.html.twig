@@ -13,11 +13,11 @@
 <title>{% block title %}NozLeq{% endblock %}</title>
 </head>
 <body>
-	<div class="header">
+	
     {% block navigation %}
      {{ include('elements/navigation.html.twig') }}
     {% endblock %}
-	</div>
+	
 	<div class="main_content">
 	{% for flash_message in app.session.flashbag.get('danger') %}
     <div class="alert alert-danger alert-dismissible niezaszer" role="alert">

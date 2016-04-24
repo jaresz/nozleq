@@ -95,10 +95,10 @@ assetic:
     assets:
         jquery:
             inputs:
-                - "%kernel.root_dir%/../vendor/components/jquery/jquery.js"
+                - "%kernel.root_dir%/../vendor/components/jquery/jquery.min.js"
         bootstrap_js:
             inputs:
-                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.js"
+                - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.min.js"
         main_js:
             inputs:
                 - "%kernel.root_dir%/../app/Resources/public/js/main_js.js"

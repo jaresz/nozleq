@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Domyślny kontroler dla www
@@ -16,6 +17,7 @@ class DefaultController extends Controller
     /**
      * Kontroler strony domowej
      * @Route("/", name="homepage")
+     * @Method({"GET"})
      */
     public function indexAction(Request $request)
     {
@@ -27,6 +29,7 @@ class DefaultController extends Controller
     /**
      * Kontroler tymczasowy do testowania logowania
      * @Route("/hello", name="hello")
+     * @Method({"GET"})
      */
     public function helloAction(Request $request)
     {

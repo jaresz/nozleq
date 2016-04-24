@@ -4,6 +4,7 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 /**
  * Klasa rozszerza klasę ProfileFormType z FOSUserBundle
@@ -17,6 +18,8 @@ class ProfileExtendedType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->remove('email');
+        $builder->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'));
         $builder->add('firstName', TextType::class, [
             'label' => 'form.first_name',
             'translation_domain' => 'FOSUserBundle',

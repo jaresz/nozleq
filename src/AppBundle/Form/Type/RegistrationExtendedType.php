@@ -1,19 +1,26 @@
 <?php
-namespace AppBundle\Form;
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * Klasa rozszerza klasę ProfileFormType z FOSUserBundle
+ * Rozszerza klasę RegistrationFormType z FOSUserBundle
  * o pola dodatkowe jak imię i nazwisko
+ *
+ * @author jkb
+ *        
  */
-class ProfileExtendedType extends AbstractType
+class RegistrationExtendedType extends AbstractType
 {
 
     /**
      * Dodaje dodatkowe pola do formularza
+     *
+     * {@inheritDoc}
+     *
+     * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -38,11 +45,12 @@ class ProfileExtendedType extends AbstractType
      */
     public function getParent()
     {
-        return 'FOS\UserBundle\Form\Type\ProfileFormType';
+        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
     }
+
 
     public function getBlockPrefix()
     {
-        return 'app_user_profile_extended';
+        return 'app_user_registration_extended';
     }
 }

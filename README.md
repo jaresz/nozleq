@@ -1,11 +1,11 @@
-Nozleq - Rezerwacja noclegów w Hotelu
+Nozleq - Rezerwacja noclegÃ³w w Hotelu
 ========================
 
 System zrobiony w celach edukacyjnych.
 
 Instrukcja instalacji
 --------------
-* nale¿y przejœæ do katalogu nadzrzêdnego do katalogu w któm bêdzie instalowane oprogramowanie
+* naleÅ¼y przejÅ›Ä‡ do katalogu nadzrzÄ™dnego do katalogu w ktÃ³m bÄ™dzie instalowane oprogramowanie
 
 ```
 git clone https://github.com/jaresz/nozleq.git

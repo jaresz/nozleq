@@ -163,7 +163,7 @@ class User extends BaseUser
      * @param boolean $isAdmin            
      * @return User
      */
-    public function setIsAdmin($isAdmin)
+    public function setAdmin($isAdmin)
     {
         $this->isAdmin = $isAdmin;
         
@@ -175,7 +175,7 @@ class User extends BaseUser
      *
      * @return boolean
      */
-    public function getIsAdmin()
+    public function isAdmin()
     {
         return $this->isAdmin;
     }
@@ -201,5 +201,28 @@ class User extends BaseUser
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    /**
+     * Set isAdmin
+     *
+     * @param boolean $isAdmin
+     * @return User
+     */
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get isAdmin
+     *
+     * @return boolean 
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
     }
 }

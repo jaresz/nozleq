@@ -77,10 +77,10 @@ fos_user:
     user_class: AppBundle\Entity\User
     registration:
         form:
-            type: AppBundle\Form\RegistrationExtendedType
+            type: AppBundle\Form\Type\RegistrationExtendedType
     profile:
         form:
-            type: AppBundle\Form\ProfileExtendedType 
+            type: AppBundle\Form\Type\ProfileExtendedType 
             
 assetic:
     debug:          '%kernel.debug%'

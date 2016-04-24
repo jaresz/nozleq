@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="{{ _charset }}" />
-        <title>Pojawił się błąd: {{ status_text }}</title>
-    </head>
-    <body>
-        <h1>Błąd</h1>
-        <h2>Serwer zwrócił "{{ status_code }} {{ status_text }}".</h2>
+{% extends 'base.html.twig' %}
 
-        <div>
-            
-        </div>
-    </body>
-</html>
+{% block title %}
+Pojawił się błąd: {{ status_text }}
+{% endblock %}
+{% block body %} 
+    <div id="wrapper">
+        <h1><span class="glyphicon glyphicon-exclamation-sign wykrzykacz" aria-hidden="true" ></span> {{ status_code }} Błąd</h1>
+        <h2>Serwer mówi "<span class="wykrzykacz">{{ status_text }}</span>".</h2>
+
+    </div>
+{% endblock %}
+

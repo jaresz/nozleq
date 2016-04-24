@@ -8,7 +8,7 @@ Instrukcja instalacji
 * nale¿y przejœæ do katalogu nadzrzêdnego do katalogu w któm bêdzie instalowane oprogramowanie
 
 ```
-git clone [œcie¿ka do repozytorium]
+git clone https://github.com/jaresz/nozleq.git
 cd nozleq
 php composer.phar install
 php app/console doctrine:schema:update --force

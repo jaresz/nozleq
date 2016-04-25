@@ -119,12 +119,9 @@ class UserAdmController extends Controller
     public function editAction(Request $request, $id)
     {
         $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(array(
-            'id' => $id
-        ));
-        if (! is_object($user) || ! $user instanceof UserInterface) {
+        $user = $userManager->find($id);
+        if (! is_object($user) || ! $user instanceof UserInterface)
             throw new AccessDeniedException('Brak dostępu.');
-        }
         
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
@@ -140,10 +137,7 @@ class UserAdmController extends Controller
         
         $form->handleRequest($request);
         
-        if ($form->isValid()) {
-            /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-            // $userManager = $this->get('fos_user.user_manager');
-            
+        if ($form->isValid()) {            
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
             
@@ -174,12 +168,9 @@ class UserAdmController extends Controller
     public function changePassAction(Request $request, $id)
     {
         $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(array(
-            'id' => $id
-        ));
-        if (! is_object($user) || ! $user instanceof UserInterface) {
+        $user = $userManager->find( $id );
+        if (! is_object($user) || ! $user instanceof UserInterface) 
             throw new AccessDeniedException('Brak dostępu.');
-        }
         
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
@@ -205,12 +196,6 @@ class UserAdmController extends Controller
             $userManager->updateUser($user);
             
             if (null === $response = $event->getResponse()) {
-                /*
-                 * $this->addFlash(
-                 * 'success',
-                 * 'Zmiany zostały zapisane.'
-                 * );
-                 */
                 $url = $this->generateUrl('admin_user_index');
                 $response = new RedirectResponse($url);
             }
@@ -246,7 +231,7 @@ class UserAdmController extends Controller
         
         if ($user) {
             if (md5($user->getRapas()) == $request->request->get('form')['harapas']) {
-                $userManager->deleteUser($user);                
+                $userManager->deleteUser($user);
                 $this->addFlash('success', 'Użytkownik został usunięty.');
             }
         }

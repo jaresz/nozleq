@@ -27,9 +27,9 @@
 {% for obj in pagination %}
 <tr {% if loop.index is odd %}class="color"{% endif %} id="row{{ obj.id }}">
     <td>{{ obj.id }}</td>
-    <td {% if not obj.enabled %}class="disabled_one"{% endif %}><strong>{{ obj.username }}</strong></td>
-    <td {% if not obj.enabled %}class="disabled_one"{% endif %}><strong>{{ obj.firstName }}</strong></td>
-    <td {% if not obj.enabled %}class="disabled_one"{% endif %}><strong>{{ obj.name }}</strong></td>
+    <td ><strong>{{ obj.username }}</strong></td>
+    <td ><strong>{{ obj.firstName }}</strong></td>
+    <td ><strong>{{ obj.name }}</strong></td>
     <td>{{ obj.email }}</td>
     <td>
    

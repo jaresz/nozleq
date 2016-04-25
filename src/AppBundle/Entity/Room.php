@@ -30,6 +30,7 @@ class Room extends Resource
      * Maksymalna liczba osób, jaka może nocować w pokoju
      * @var integer
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     protected $capacity;
     

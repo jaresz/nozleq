@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Room;
-use AppBundle\Form\RoomType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use AppBundle\Traits as AppTraits;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -63,7 +62,7 @@ class RoomController extends Controller
     public function newAction(Request $request)
     {
         $room = new Room();
-        $form = $this->createForm('AppBundle\Form\RoomType', $room);
+        $form = $this->createForm('AppBundle\Form\Type\RoomType', $room);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -124,7 +123,7 @@ class RoomController extends Controller
     public function editAction(Request $request, Room $room)
     {
        
-        $editForm = $this->createForm('AppBundle\Form\RoomType', $room);
+        $editForm = $this->createForm('AppBundle\Form\Type\RoomType', $room);
         $editForm->handleRequest($request);
         
         if ($editForm->isSubmitted() && $editForm->isValid()) {

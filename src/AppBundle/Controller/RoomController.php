@@ -78,7 +78,7 @@ class RoomController extends Controller
             ));
         }
         
-        return $this->render('room/new.html.twig', array(
+        return $this->render('BaseCRUD/create.html.twig', array(
             'room' => $room,
             'form' => $form->createView(),
             'routeNames' => self::getRouteNames(),
@@ -97,6 +97,12 @@ class RoomController extends Controller
     public function showAction(Room $room)
     {
         $deleteForm = $this->createDeleteForm($room);
+        
+        //$resMen = $this->get('app.reservation_manager');
+        
+        //$rezerwacja = $resMen->getReservation($room, '2016-04-30');
+        
+        //dump( $rezerwacja );
         
         return $this->render('room/show.html.twig', array(
             'room' => $room,
@@ -117,7 +123,7 @@ class RoomController extends Controller
      */
     public function editAction(Request $request, Room $room)
     {
-        $deleteForm = $this->createDeleteForm($room);
+       
         $editForm = $this->createForm('AppBundle\Form\RoomType', $room);
         $editForm->handleRequest($request);
         
@@ -129,12 +135,11 @@ class RoomController extends Controller
             return $this->redirectToRoute('room_index');
         }
         
-        return $this->render('room/edit.html.twig', array(
+        return $this->render('BaseCRUD/edit.html.twig', array(
             'room' => $room,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
             'routeNames' => self::getRouteNames(),
-            'title' => self::ENTITIES_TITLE
+            'title' => self::ENTITY_TITLE
         ));
     }
 

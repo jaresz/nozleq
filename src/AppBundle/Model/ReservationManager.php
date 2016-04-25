@@ -9,18 +9,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 class ReservationManager extends AbstractClassWithEntityManager {
     
     
-    public function findUserByName($username)
+    public function getReservation(Resource $resouce, $reservarionDay)
     {
         $em = $this->entityManager;
-        $fuser = $em->getRepository('AppBundle:User')->findOneByName($username);
-        return $fuser;
-    }
-    
-    public function findUserByOfficeUserName($username)
-    {
-        $em = $this->entityManager;
-        $fuser = $em->getRepository('AppBundle:User')->findOneByOfficeUserName($username);
-        return $fuser;
+        $rez = $em->getRepository('AppBundle:Reservation')->getReservation($resouce, $reservarionDay);
+        return $rez;
     }
     
 }

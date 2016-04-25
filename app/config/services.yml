@@ -15,6 +15,6 @@ services:
         class: AppBundle\Form\Type\ProfileExtendedType
         tags:
             - { name: form.type, alias: app_user_profile_extended }
-    app.resource.reservation_manager:
+    app.reservation_manager:
         class: AppBundle\Model\ReservationManager
         arguments:    ["@doctrine.orm.entity_manager"]

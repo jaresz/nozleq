@@ -7,10 +7,11 @@ namespace AppBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Entity\Traits;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Klasa wszystkich typów użytkowników systemu
- * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\UserRepository")
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
@@ -25,15 +26,36 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $created;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    protected $updated;
+    
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $rapas;
+    
+    
+    /**
      * @Assert\NotBlank(groups={"Registration", "Profile"})
      * @Assert\Length(min=5, groups={"Registration", "Profile"})
      */
     protected $username;
 
-    /**
-     * @ORM\Column(type="string", length=32)
-     */
-    protected $rapas;
+
 
     /**
      * @Assert\NotBlank(groups={"Registration", "Profile"})
@@ -53,32 +75,24 @@ class User extends BaseUser
      */
     protected $firstName;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(groups={"Registration", "Profile"})
-     */
-    protected $lastName;
+
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     protected $phone;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $isAdmin;
 
     public function __construct()
     {
         parent::__construct();
         
-        $this->isAdmin = false;
         // Dodatkowy niepuliczny identyfikar obiektu/rekordu - używany jako dodatkowy np. przy kasowaniu
-        $this->setRapas(substr(md5(rand(199, 9999)), 0, 10));
+        $this->setRapas(substr(md5(rand(199, 9999)), 0, 30));
     }
 
     /**
+     * Sprawdza czy hasło nie jes takie jak login
      * @Assert\IsTrue(message="registration.pass_cannot_be_like_login", groups={"Strict", "Registration", "Profile"})
      */
     public function isPasswordLegal()
@@ -135,38 +149,32 @@ class User extends BaseUser
     }
 
     /**
-     * Set lastName
-     *
-     * @param string $lastName            
-     * @return User
+     * Dodaje lub usuwa wybraną rolę użytkownika (pierwszy parametr)
+     * na podstawie przekazanej wartości (drugi parametr)
+     * 
+     * @param string $role      oznaczenie roli na której operujemy np. 'ROLE_USER'          
+     * @param boolean $bval     wartość roli: true - dodanie, false - usunięcie            
      */
-    public function setLastName($lastName)
+    protected function setRole($role, $bval)
     {
-        $this->lastName = $lastName;
-        
-        return $this;
+        if ($bval) {
+            if (! $this->hasRole($role))  // Jeśli użytkownik nie ma tej roli,
+                $this->addRole($role);    // to ją dodajemy:
+        } else {
+            if ($this->hasRole($role))    // Jeśli użytkownik ma już tą rolę,
+                $this->removeRole($role); // to ją usuwamy:
+        }
     }
 
     /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Set isAdmin
+     * Ustawia rolę administratora - ROLE_ADMIN
      *
      * @param boolean $isAdmin            
      * @return User
      */
-    public function setAdmin($isAdmin)
+    public function setIsAdmin($isAdmin)
     {
-        $this->isAdmin = $isAdmin;
-        
+        $this->setRole('ROLE_ADMIN', $isAdmin);
         return $this;
     }
 
@@ -177,9 +185,33 @@ class User extends BaseUser
      */
     public function isAdmin()
     {
-        return $this->isAdmin;
+        return $this->hasRole('ROLE_ADMIN');
     }
 
+
+    /**
+     * Ustawia rolę sprzedawcy/recepcjonisty - ROLE_CLERK
+     *
+     * @param boolean $isAdmin
+     * @return User
+     */
+    public function setIsClerk($isAdmin)
+    {
+        $this->setRole('ROLE_CLERK', $isAdmin);
+        return $this;
+    }
+    
+    /**
+     * Get isClerk
+     *
+     * @return boolean
+     */
+    public function isClerk()
+    {
+        return $this->hasRole('ROLE_CLERK');
+    }
+    
+    
     /**
      * Set phone
      *
@@ -203,4 +235,75 @@ class User extends BaseUser
         return $this->phone;
     }
 
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return User
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return User
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 }

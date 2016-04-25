@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}{% if title is defined %}{{ title }} - {% endif %}{{ parent() }}{% endblock %}
+
+{% block body %}
+	{% if title is defined %}<h1>{{ title }}</h1>{% endif %}
+    
+    <div class="alert alert-danger niezaszer" role="alert">
+      <span class="glyphicon glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+      <span class="sr-only">Pytanie:</span>
+      <p>Nie należy usuwać użytkowników, którzy moga mieć historyczne aktywności w systemie,
+      gdyż uniemożliwi to identyfikację użytkownika, który dokonał tych akcji. <br>
+      W celu uniemożliwienie użycia konta należy wyłączyć je w edycji użytkonika
+      </p>
+       <p>Czy na pewno usunąć użytkownika: <strong>{{ form.vars.value.username }} ?</strong> </p>
+    
+    
+    
+        
+    {{ form_start(form, { 'attr': {'class': 'frmdelete'} }) }}
+     {{ form_widget(form) }}
+      <div class="row">
+        <div class="col-sm-offset-8 col-sm-4 al-right">
+        <div class="btn-group" role="group" aria-label="...">
+          <button type="submit" value="delete" name="delete"  class="btn btn-danger">Usuń</button>
+          <button type="submit" value="cancel" name="cancel" class="btn btn-default" onclick="history.back()">Anuluj</button>
+        </div>
+        </div>
+      </div>
+    {{ form_end(form) }}
+    </div>
+
+{% endblock %}

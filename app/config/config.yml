@@ -131,3 +131,9 @@ assetic:
                 - "%kernel.root_dir%/../vendor/twitter/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"
             output: "fonts/glyphicons-halflings-regular.woff2"
 
+stof_doctrine_extensions:
+    default_locale: "%locale%"
+    orm:
+        default:
+            timestampable: true
+            loggable: false

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Pokój</h1>
+
+    <table class="table vietab">
+        <tbody>
+        	<tr>
+                <th>Name</th>
+                <td>{{ room.name }}</td>
+            </tr>
+            <tr>
+                <th>Roomnumber</th>
+                <td>{{ room.roomNumber }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ room.description|nl2br }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ room.capacity }}</td>
+            </tr>
+            <tr>
+                <th>Minibar</th>
+                <td>{% if room.minibar %}Tak{% else %}Nie{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Airconditioned</th>
+                <td>{% if room.airConditioned %}Tak{% else %}Nie{% endif %}</td>
+            </tr>
+            <tr>
+                <th>CreatedBy</th>
+                <td>{{ room.CreatedByUser }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if room.created %}{{ room.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{% if room.updated %}{{ room.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+<div class="container-fluid">
+<div class="row">
+	<div class="col-sm-3"></div>
+	
+	<div class="col-sm-2">
+		<a href="{{ path('room_index') }}" class="btn btn-default btn-block">Powrót do listy</a>
+	</div>
+	<div class="col-sm-2">
+		<a href="{{ path('room_edit', { 'id': room.id }) }}" class="btn btn-primary btn-block">Edycja</a>
+	</div>
+	<div class="col-sm-2">
+		{{ form_start(delete_form, {'attr': {'onsubmit':'return confirm("Czy na pewno usunąć?");'} } ) }}
+                <input type="submit" value="Usuń" class="btn btn-danger btn-block">
+            {{ form_end(delete_form) }}
+	</div>
+	
+	<div class="col-sm-3"></div>
+</div>
+</div>
+    
+{% endblock %}

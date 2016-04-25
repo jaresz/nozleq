@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Room edit</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+    
+    <div class="row">
+    	<div class="col-sm-2"></div>
+    	<div class="col-sm-5">
+    		<div class="btn-group" role="group" aria-label="...">
+    			<button type="submit" value="delete" name="delete"
+    				class="btn btn-primary">Zapisz</button>
+    			<a
+    				href="{{ path('room_index') }}" class="btn btn-default">Anuluj</a>
+    		</div>
+    	</div>
+    	<div class="col-sm-5 al-right">
+
+    	</div>
+    
+    </div>
+    {{ form_end(edit_form) }}
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}{% if title is defined %}{{ title }} - {% endif %} {{ parent() }}{% endblock %}
+
+
+{% block body %}
+
+<div class="forbtns">
+<a href="{{ path('admin_user_new') }}" class="btn btn-success" >
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nowy
+</a>
+</div>
+
+
+<table class="table table-hove">
+<thead>
+<tr>
+    <th>id</th>
+    <th>login</th>
+    <th>imię</th>
+    <th>nazwisko</th>
+    <th>email</th>
+    <th>Operacje</th>
+</tr>
+</thead>
+
+{% for obj in pagination %}
+<tr {% if loop.index is odd %}class="color"{% endif %} id="row{{ obj.id }}">
+    <td>{{ obj.id }}</td>
+    <td {% if not obj.enabled %}class="disabled_one"{% endif %}><strong>{{ obj.username }}</strong></td>
+    <td {% if not obj.enabled %}class="disabled_one"{% endif %}><strong>{{ obj.firstName }}</strong></td>
+    <td {% if not obj.enabled %}class="disabled_one"{% endif %}><strong>{{ obj.name }}</strong></td>
+    <td>{{ obj.email }}</td>
+    <td>
+   
+        <a href="{{ path('admin_user_edit', {'id': obj.id }) }}"  class="btn btn-default"><span class="glyphicon glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span> <span class="sr-only">Edycja</span></a>
+        <a href="{{ path('admin_user_show', {'id': obj.id }) }}"  class="btn btn-default" title="Podgląd"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> <span class="sr-only">Podgląd</span></a>
+                    
+     </td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

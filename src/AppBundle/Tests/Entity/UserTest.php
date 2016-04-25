@@ -16,7 +16,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $testowy = new User();
         $testowy->setFirstName(self::TEST_USER_FIRST_NAME);
-        $testowy->setLastName(self::TEST_USER_LAST_NAME);
+        $testowy->setName(self::TEST_USER_LAST_NAME);
         $rp = $testowy->getRapas();
         $this->assertTrue(null != $rp);
         $this->assertTrue('' != $rp);

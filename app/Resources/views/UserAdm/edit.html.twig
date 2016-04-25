@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}{% if title is defined %}{{ title }} - {% endif %}{{ parent() }}{% endblock %}
+
+{% block body %}
+	{% if title is defined %}<h1>{{ title }}</h1>{% endif %}
+    {% include 'UserAdm/form.html.twig' with { 'form': form } %}
+{% endblock %}

@@ -29,7 +29,7 @@ class RegistrationExtendedType extends AbstractType
             'translation_domain' => 'FOSUserBundle',
             'required' => true
         ]);
-        $builder->add('lastName', TextType::class, [
+        $builder->add('name', TextType::class, [
             'label' => 'form.last_name',
             'translation_domain' => 'FOSUserBundle',
             'required' => true

@@ -12,18 +12,20 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $unr=0;
-        $usrFx[$unr] 
-        = new User();
-        $usrFx[$unr]->setUsername("admin");
+        $usrFx=[];
+        $usrFx[$unr] = new User();
+        $uname = "admin";
+        $usrFx[$unr]->setUsername($uname);
         $usrFx[$unr]->setFirstName("Administrator");
-        $usrFx[$unr]->setLastName("Główny");
+        $usrFx[$unr]->setName("Główny");
         $usrFx[$unr]->setEmail("admin@listy.internetowe.pl");
         $usrFx[$unr]->setEnabled(true);
-        $usrFx[$unr]->setAdmin(true); 
         $usrFx[$unr]->setPlainPassword("RazZimelen(ioWy)45!");        
         $manager->persist($usrFx[$unr]);
         $usrFx[$unr]->addRole('ROLE_ADMIN');
        
+        $this->addReference('User:First', $usrFx[$unr]);
+        $this->addReference('User:'.$uname, $usrFx[$unr]);
 
         $manager->flush();
        

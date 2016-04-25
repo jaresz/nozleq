@@ -263,8 +263,8 @@ th {
 @font-face {
   font-family: 'Glyphicons Halflings';
 
-  src: url('../../fonts/glyphicons-halflings-regular.eot');
-  src: url('../../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -7405,4 +7405,21 @@ div.main_content {
 
 #systemsubtitle {
 	font-size: 125%;
+}
+
+.wykrzykacz {
+	color: #900000;
+}
+
+table.vietab th {
+	background: #ccc;
+}
+
+table.vietab tr:FIRST-CHILD th {
+	border-top-left-radius: 10px;
+	border-top: none;
+}
+table.vietab tr:LAST-CHILD th {
+	border-bottom-left-radius: 10px;
+	border-bottom: none;
 }

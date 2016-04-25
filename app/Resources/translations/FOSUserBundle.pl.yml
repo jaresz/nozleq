@@ -3,4 +3,6 @@ security.login.header:  Proszę się zalogować
 form.first_name: Imię
 form.last_name: Nazwisko
 form.phone: Telefon
+form.is_admin:  Administrator
+form.is_clerk:  Recepcjonista
 profile.edit.submit: Zapisz

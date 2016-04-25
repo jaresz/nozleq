@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Pokoje</h1>
+
+
+
+<div class="forbtns">
+<a href="{{ path('room_new') }}" class="btn btn-success" >
+  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nowy
+</a>
+</div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Roomnumber</th>
+                <th>Nazwa</th>
+                <th>Capacity</th>
+                <th>Minibar</th>
+                <th>Airconditioned</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for oneRow in rooms %}
+            <tr>
+                <td><a href="{{ path('room_show', { 'id': oneRow.id }) }}">{{ oneRow.roomNumber }}</a></td>
+                <td><a href="{{ path('room_show', { 'id': oneRow.id }) }}">{{ oneRow.name }}</a></td>
+                <td>{{ oneRow.capacity }}</td>
+                <td>{% if oneRow.minibar %}Tak{% else %}Nie{% endif %}</td>
+                <td>{% if oneRow.airConditioned %}Tak{% else %}Nie{% endif %}</td>
+
+                
+                <td>
+                	<a href="{{ path('room_edit', {'id': oneRow.id }) }}"  class="btn btn-default" title="Edycja"><span class="glyphicon glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span> <span class="sr-only">Edycja</span></a>
+        			<a href="{{ path('room_show', {'id': oneRow.id }) }}"  class="btn btn-default" title="Podgląd"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> <span class="sr-only">Podgląd</span></a>                    
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

@@ -61,3 +61,16 @@ div.main_content {
 .wykrzykacz {
 	color: #900000;
 }
+
+table.vietab th {
+	background: #ccc;
+}
+
+table.vietab tr:FIRST-CHILD th {
+	border-top-left-radius: 10px;
+	border-top: none;
+}
+table.vietab tr:LAST-CHILD th {
+	border-bottom-left-radius: 10px;
+	border-bottom: none;
+}

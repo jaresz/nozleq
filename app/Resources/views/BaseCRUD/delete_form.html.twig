@@ -1,0 +1,22 @@
+{% block body %}
+<div class="alert alert-danger niezaszer" role="alert">
+  <span class="glyphicon glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+  <span class="sr-only">Pytanie:</span>
+  Czy na pewno usunąć: <strong>{{ form.vars.value.name }} ?</strong>
+
+
+
+    
+{{ form_start(form, { 'attr': {'class': 'frmdelete'} }) }}
+ {{ form_widget(form) }}
+  <div class="row">
+    <div class="col-sm-offset-8 col-sm-4 al-right">
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="submit" value="delete" name="delete"  class="btn btn-danger">Usuń</button>
+      <button type="submit" value="cancel" name="cancel" class="btn btn-default" onclick="history.back()">Anuluj</button>
+    </div>
+    </div>
+  </div>
+{{ form_end(form) }}
+</div>
+{% endblock %}

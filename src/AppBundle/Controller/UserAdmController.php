@@ -167,6 +167,7 @@ class UserAdmController extends Controller
      * @Route(":{id}/changepass", name="admin_user_changepass", requirements={
      * "id": "\d+"
      * })
+     * @Method({"GET", "POST"})
      */
     public function changePassAction(Request $request, $id)
     {

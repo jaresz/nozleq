@@ -13,3 +13,4 @@ interface BookableResourceInterface
     //public function isReservedOn();
     
 }
+

@@ -14,7 +14,7 @@ class RoomControllerTest extends WebTestCase
 
         // Create a new entry in the database
         $crawler = $client->request('GET', '/admin/room/');
-        $this->assertTrue(0 < $client->getResponse()->getStatusCode()");
+        $this->assertTrue(0 < $client->getResponse()->getStatusCode());
       
     }
 

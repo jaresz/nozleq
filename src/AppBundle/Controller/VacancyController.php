@@ -40,7 +40,7 @@ class VacancyController extends Controller
      *
      * @Route("/", defaults={"day" = 0 }, name="vacancy_index")
      * @Route("/on:{day}", name="vacancy_on_index")
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      */
     public function indexAction(Request $request, $day)
     {

@@ -1,7 +1,6 @@
 <?php
 namespace AppBundle\Entity\Repository;
 
-use AppBundle\Entity\Reservation;
 use AppBundle\Entity\Resource;
 
 /**

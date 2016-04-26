@@ -23,6 +23,7 @@ class VacancyFilterType extends AbstractType
                     'label'  => 'reservation.date'
                 ))
             ->add('Filter', SubmitType::class)
+            ->setMethod('GET')
         ;
     }
     

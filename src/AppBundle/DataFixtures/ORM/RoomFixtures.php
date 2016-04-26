@@ -48,9 +48,9 @@ class RoomFixtures extends AbstractFixture implements OrderedFixtureInterface
             $nr++;
             $te_objs[$obi] = new Room();            
             $te_objs[$obi]->setName($onename.' Pokój');
-            $te_objs[$obi]->setRoomNumber($nr);
+            $te_objs[$obi]->setPrice($nr%5*20+100);
             $te_objs[$obi]->setAirConditioned(true);
-            $te_objs[$obi]->setCapacity(2);
+            $te_objs[$obi]->setCapacity($nr%3+1);
             $te_objs[$obi]->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n Praesent id eros volutpat, ultrices velit non, efficitur ante.\n Praesent ornare lorem auctor tortor efficitur, in lobortis est porttitor. Nam consequat nulla at ligula lacinia congue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer vulputate rhoncus ultricies.");
             $te_objs[$obi]->setCreatedByUser( $manager->merge($this->getReference('User:First')) );
             $manager->persist($te_objs[$obi]);

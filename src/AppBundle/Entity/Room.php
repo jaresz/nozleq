@@ -17,9 +17,9 @@ class Room extends Resource
     
     
     /**
-     * @ORM\Column(type="integer", unique=true, nullable=true)
+     * @ORM\Column(type="integer")
      */
-    protected $roomNumber;
+    protected $price;
     
     /**
      * * @ORM\Column(type="text", nullable=true)
@@ -55,30 +55,6 @@ class Room extends Resource
      */
     protected $createdByUser;
     
-
-    /**
-     * Set roomNumber
-     *
-     * @param integer $roomNumber
-     *
-     * @return Room
-     */
-    public function setRoomNumber($roomNumber)
-    {
-        $this->roomNumber = $roomNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get roomNumber
-     *
-     * @return integer
-     */
-    public function getRoomNumber()
-    {
-        return $this->roomNumber;
-    }
 
     /**
      * Set description
@@ -339,5 +315,29 @@ class Room extends Resource
     public function getRapas()
     {
         return $this->rapas;
+    }
+
+    /**
+     * Set price
+     *
+     * @param integer $price
+     *
+     * @return Room
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return integer
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

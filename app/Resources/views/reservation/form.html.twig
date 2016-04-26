@@ -1,0 +1,53 @@
+{% block body %}
+<div class="form-group">
+    <div class="row">
+    	<div class="col-sm-2 al-right"><label class="control-label">Nazwa pokoju</label></div>
+    	<div class="col-sm-5">
+			<span class="form-control-static">{{ room.name }}</span>
+    	</div>
+    
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+    	<div class="col-sm-2 al-right"><label class="control-label">Data rezerwacji</label></div>
+    	<div class="col-sm-5">
+			<span class="form-control-static">{{ reservation_day }}</span>
+    	</div>
+    
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+    	<div class="col-sm-2 al-right"><label class="control-label">Cena</label></div>
+    	<div class="col-sm-5">
+			<span class="form-control-static">{{ room.price }}</span>
+    	</div>
+    
+    </div>
+</div>
+{{ form_start(form, { 'attr': {'class': 'frmpodstawowy', 'novalidate': 'novalidate'} }) }}
+ {{ form_widget(form) }}
+
+ 
+    <div class="row">
+    	<div class="col-sm-2"></div>
+    	<div class="col-sm-5">
+    		<div class="btn-group" role="group" aria-label="...">
+    			<button type="submit" 
+    				class="btn btn-success">Rezerwuj</button>
+    			<a
+				href="{{ path(routeNames.index) }}" class="btn btn-default">Anuluj</a>
+    		</div>
+    	</div>
+    	<div class="col-sm-5 al-right">
+
+    	</div>
+    
+    </div>
+    
+
+
+{{ form_end(form) }}
+
+{% endblock %}

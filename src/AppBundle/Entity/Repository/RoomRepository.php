@@ -10,4 +10,40 @@ namespace AppBundle\Entity\Repository;
  */
 class RoomRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getRoomsReservedOn($reservarionDay)
+    {
+        $qb = $this->createQueryBuilder('a')
+        ->select([
+            'Reservation',
+            'Room'
+        ])
+        ->from('AppBundle\Entity\Reservation', 'Reservation')
+        ->leftJoin('Reservation.resource', 'Room')
+        ->where("Reservation.day = :day")
+        ->setParameter('day', $reservarionDay);
+        ///->addOrderBy('Reservation.name', 'ASC')
+        //
+        
+        return $qb->getQuery()->getResult();
+        
+    }
+    
+    public function getRoomsAvailabilitiesOn($reservarionDay)
+    {
+        $qb = $this->createQueryBuilder('a')
+        ->select([
+            'Room',
+            'Reservation',
+        ])
+        ->from('AppBundle\Entity\Reservation', 'Reservation')
+        ->leftJoin('Reservation.resource', 'Room')
+        //->where("Reservation.day = :day")
+        //->setParameter('day', $reservarionDay)
+        ///->addOrderBy('Reservation.name', 'ASC')
+        //
+        ;
+        return $qb->getQuery()->getResult();
+    
+    }
 }

@@ -89,6 +89,12 @@ class User extends BaseUser
         // Dodatkowy niepuliczny identyfikar obiektu/rekordu - używany jako dodatkowy np. przy kasowaniu
         $this->setRapas(substr(md5(rand(199, 9999)), 0, 30));
     }
+    
+
+    public function __toString()
+    {
+        return (string) $this->getFirstName().' '.$this->getName(); //.' ('. $this->getUsername().')';
+    }
 
     /**
      * Sprawdza czy hasło nie jes takie jak login

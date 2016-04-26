@@ -3,10 +3,13 @@
 			class="glyphicon glyphicon glyphicon-home" aria-hidden="true"></span><span
 			class="sr-only">Start</span></a></li>
 	<li class=""><a href="{{ path('homepage') }}">O nas</a></li>
-	<li class=""><a href="">Wolne pokoje</a></li>
-	<li class=""><a href="{{ path('fos_user_registration_register') }}">Rejestracja</a></li> {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
-	<li class=""><a href="#">Moje rezerwacje</a></li> {% endif %} 
+	<li class=""><a href="{{ path('vacancy_index') }}">Wolne pokoje</a></li>
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	<li class=""><a href="#">Moje rezerwacje</a></li>
+	{% else %} 
+	<li class=""><a href="{{ path('fos_user_registration_register') }}">Rejestracja</a></li> 
+	{% endif %} 
+    
 	{% if is_granted("ROLE_ADMIN") %}
 	<li
 		class="dropdown {% if app.request.attributes.get('_route') starts with 'admin_' %}active{% endif %}"><a

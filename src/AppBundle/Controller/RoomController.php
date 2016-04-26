@@ -54,8 +54,62 @@ class RoomController extends Controller
     }
 
     /**
+     * Lists reserved Rooms.
+     *
+     * @Route("/reservations_on", defaults={"day" = 0 }, name="reserved_room_index")
+     * @Route("/reservations_on:{day}", name="reserved_room_on_index")
+     * @Method("GET")
+     */
+    public function reservedIndexAction(Request $request, $day)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        if (! $day)
+            $day = new \DateTime();
+        
+        $rooms = $em->getRepository('AppBundle:Room')->getRoomsReservedOn($day);
+        
+        dump($rooms);
+        
+        return $this->render('reservation/index.html.twig', array(
+            'reservations' => $rooms,
+            'routeNames' => self::getRouteNames(),
+            'title' => self::ENTITIES_TITLE
+        ));
+    }
+
+    /**
+     * Lists reserved Rooms.
+     *
+     * @Route("/free_rooms", defaults={"day" = 0 }, name="free_rooms_index")
+     * @Route("/free_rooms_on:{day}", name="free_rooms_on_index")
+     * @Method("GET")
+     */
+    public function freeRoomsAction(Request $request, $day)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        if (! $day)
+            $day = new \DateTime();
+        
+        $rooms = $em->createQuery('SELECT rm, rs FROM AppBundle:Room rm
+            LEFT JOIN rm.reservations rs
+            WHERE rs.day != :day OR rs.day IS NULL')
+            ->setParameter('day', $day)
+            ->getResult();
+        
+        dump($rooms);
+        
+        return $this->render('room/index.html.twig', array(
+            'rooms' => $rooms,
+            'routeNames' => self::getRouteNames(),
+            'title' => self::ENTITIES_TITLE
+        ));
+    }
+
+    /**
      * Creates a new Room entity.
-     * 
+     *
      * @Route("/new", name="room_new")
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_ADMIN')")
@@ -98,11 +152,11 @@ class RoomController extends Controller
     {
         $deleteForm = $this->createDeleteForm($room);
         
-        //$resMen = $this->get('app.reservation_manager');
+        // $resMen = $this->get('app.reservation_manager');
         
-        //$rezerwacja = $resMen->getReservation($room, '2016-04-30');
+        // $rezerwacja = $resMen->getReservation($room, '2016-04-30');
         
-        //dump( $rezerwacja );
+        // dump( $rezerwacja );
         
         return $this->render('room/show.html.twig', array(
             'room' => $room,
@@ -123,7 +177,6 @@ class RoomController extends Controller
      */
     public function editAction(Request $request, Room $room)
     {
-       
         $editForm = $this->createForm('AppBundle\Form\Type\RoomType', $room);
         $editForm->handleRequest($request);
         
@@ -142,8 +195,7 @@ class RoomController extends Controller
             'title' => self::ENTITY_TITLE
         ));
     }
-    
-    
+
     /**
      * Displays a form to reserve an existing Room entity.
      *
@@ -157,28 +209,29 @@ class RoomController extends Controller
     {
         $newReserva = new Reservation();
         $newReserva->setResource($room);
-        $newReserva->setName("Rezerwacja dla ".$this->getUser()->getName());
-        if (!$day)
+        $newReserva->setName("Rezerwacja dla " . $this->getUser()
+            ->getName());
+        if (! $day)
             $newReserva->setDay((new \DateTime())->add(new \DateInterval('P1D')));
         else
             $newReserva->setDay(new \DateTime($day));
         
         $editForm = $this->createForm('AppBundle\Form\Type\RoomReservationType', $newReserva);
         $editForm->handleRequest($request);
-    
+        
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             
             $resMen = $this->get('app.reservation_manager');
             $booked = $resMen->makeReservation($room, $newReserva->getDay(), $this->getUser(), $newReserva->getName());
             
             if ($booked)
-                $this->addFlash('success', "Rezerwacja nr ".$booked->getId()." została zapisana.");
-            else 
+                $this->addFlash('success', "Rezerwacja nr " . $booked->getId() . " została zapisana.");
+            else
                 $this->addFlash('warning', "Niestety, nie udało się zrobić rezerwacji.\nSpróbuj wybrać inny zasób lub datę.");
-            //dump($booked);
-            //return $this->redirectToRoute('room_index');
+            // dump($booked);
+            // return $this->redirectToRoute('room_index');
         }
-    
+        
         return $this->render('BaseCRUD/edit.html.twig', array(
             'room' => $room,
             'form' => $editForm->createView(),

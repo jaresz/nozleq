@@ -11,8 +11,9 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $unr=0;
+
         $usrFx=[];
+        $unr=0;
         $usrFx[$unr] = new User();
         $uname = "admin";
         $usrFx[$unr]->setUsername($uname);
@@ -26,7 +27,34 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
        
         $this->addReference('User:First', $usrFx[$unr]);
         $this->addReference('User:'.$uname, $usrFx[$unr]);
-
+       
+        $unr++;
+        $usrFx[$unr] = new User();
+        $uname = "recepcjonista";
+        $usrFx[$unr]->setUsername($uname);
+        $usrFx[$unr]->setFirstName("Sobiesław");
+        $usrFx[$unr]->setName("Radziwiłowicz");
+        $usrFx[$unr]->setEmail("recepcjonista@listy.internetowe.pl");
+        $usrFx[$unr]->setEnabled(true);
+        $usrFx[$unr]->setPlainPassword("reseg923ibd454253!");
+        $manager->persist($usrFx[$unr]);
+        $usrFx[$unr]->addRole('ROLE_CLERK');
+         
+        $this->addReference('User:'.$uname, $usrFx[$unr]);
+        $unr++;
+        $usrFx[$unr] = new User();
+        $uname = "stefan";
+        $usrFx[$unr]->setUsername($uname);
+        $usrFx[$unr]->setFirstName("Stefan");
+        $usrFx[$unr]->setName("Korbiszczykowicz");
+        $usrFx[$unr]->setEmail("korba@listy.internetowe.pl");
+        $usrFx[$unr]->setEnabled(true);
+        $usrFx[$unr]->setPlainPassword("2raz2dwa3trzy!");
+        $manager->persist($usrFx[$unr]);
+        $usrFx[$unr]->addRole('ROLE_USER');
+         
+        $this->addReference('User:'.$uname, $usrFx[$unr]);
+        
         $manager->flush();
        
         

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %} {% block body %}
+
+<div class="forfiltersform">
+
+	{{ form_start(form, { 'attr': {'class': 'form-inline', 'novalidate':
+	'novalidate'} }) }} {{ form_widget(form) }}
+
+	{{ form_end(form) }}
+</div>
+
+<h1>Wolne pokoje w dniu {{ day|date('Y-m-d') }}</h1>
+
+
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Pokój</th>
+			<th>Cena</th>
+			<th>Pojemność</th>
+			<th>Minibar</th>
+			<th>Klimatyzacja</th>
+			<th>Akcje</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for oneRow in rooms %}
+		<tr>
+			<td><strong>{{oneRow.name }}</strong><br>
+			    {{oneRow.description }}
+			</td>
+			<td>{{ oneRow.price }}</td>
+			<td>{{ oneRow.capacity }}</td>
+			<td>{% if oneRow.minibar %}Tak{% else %}Nie{% endif %}</td>
+			<td>{% if oneRow.airConditioned %}Tak{% else %}Nie{% endif %}</td>
+
+			<td><a href="{{ path('book_on', {'id': oneRow.id, 'day': day|date('Y-m-d') }) }}"
+				class="btn btn-default" title="Edycja">Rezerwuj</a>
+				</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+
+{% endblock %}

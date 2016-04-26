@@ -14,18 +14,16 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Roomnumber</th>
-                <th>Nazwa</th>
-                <th>Capacity</th>
+                <th>Nazwa lub numer pokoju</th>
+                <th>Pojemność</th>
                 <th>Minibar</th>
-                <th>Airconditioned</th>
-                <th>Actions</th>
+                <th>Klimatyzacja</th>
+                <th>Akcje</th>
             </tr>
         </thead>
         <tbody>
         {% for oneRow in rooms %}
             <tr>
-                <td><a href="{{ path('room_show', { 'id': oneRow.id }) }}">{{ oneRow.roomNumber }}</a></td>
                 <td><a href="{{ path('room_show', { 'id': oneRow.id }) }}">{{ oneRow.name }}</a></td>
                 <td>{{ oneRow.capacity }}</td>
                 <td>{% if oneRow.minibar %}Tak{% else %}Nie{% endif %}</td>

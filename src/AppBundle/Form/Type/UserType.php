@@ -21,7 +21,6 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //$translator = $this->get('translator');
         $builder
         ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
         ->add('plainPassword', RepeatedType::class, array(
@@ -30,14 +29,14 @@ class UserType extends AbstractType
             'first_options' => array('label' => 'form.password'),
             'second_options' => array('label' => 'form.password_confirmation'),
             'invalid_message' => 'fos_user.password.mismatch',
+            'required' => true
         ))
         ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
         ->add('firstName', TextType::class, array('label' => 'form.first_name', 'translation_domain' => 'FOSUserBundle'))
         ->add('name', TextType::class, array('label' => 'form.last_name', 'translation_domain' => 'FOSUserBundle'))
-        ->add('isAdmin', CheckboxType::class 	, array('label' =>  'form.is_admin', 'translation_domain' => 'FOSUserBundle', 'required' => false))
-        ->add('isClerk', CheckboxType::class 	, array('label' =>  'form.is_clerk', 'translation_domain' => 'FOSUserBundle', 'required' => false))
+        ->add('roAdmin', CheckboxType::class 	, array('label' =>  'form.is_admin', 'translation_domain' => 'FOSUserBundle', 'required' => false))
+        ->add('roClerk', CheckboxType::class 	, array('label' =>  'form.is_clerk', 'translation_domain' => 'FOSUserBundle', 'required' => false))
         
-        //->add('submit', SubmitType::class, array('label' => 'Zapisz'));
         ;
     }
 

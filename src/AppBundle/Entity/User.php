@@ -174,21 +174,21 @@ class User extends BaseUser
     /**
      * Ustawia rolę administratora - ROLE_ADMIN
      *
-     * @param boolean $isAdmin            
+     * @param boolean $roAdmin            
      * @return User
      */
-    public function setIsAdmin($isAdmin)
+    public function setRoAdmin($roAdmin)
     {
-        $this->setRole('ROLE_ADMIN', $isAdmin);
+        $this->setRole('ROLE_ADMIN', $roAdmin);
         return $this;
     }
 
     /**
-     * Get isAdmin
+     * Get roAdmin
      *
      * @return boolean
      */
-    public function isAdmin()
+    public function roAdmin()
     {
         return $this->hasRole('ROLE_ADMIN');
     }
@@ -197,21 +197,21 @@ class User extends BaseUser
     /**
      * Ustawia rolę sprzedawcy/recepcjonisty - ROLE_CLERK
      *
-     * @param boolean $isAdmin
+     * @param boolean $roAdmin
      * @return User
      */
-    public function setIsClerk($isAdmin)
+    public function setRoClerk($roAdmin)
     {
-        $this->setRole('ROLE_CLERK', $isAdmin);
+        $this->setRole('ROLE_CLERK', $roAdmin);
         return $this;
     }
     
     /**
-     * Get isClerk
+     * Get roClerk
      *
      * @return boolean
      */
-    public function isClerk()
+    public function roClerk()
     {
         return $this->hasRole('ROLE_CLERK');
     }

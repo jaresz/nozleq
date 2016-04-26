@@ -49,9 +49,8 @@ class VacancyController extends Controller
         $filter = new \AppBundle\Entity\VacancyFilter();
         if ($day)
             $filter->day = new \DateTime($day);
-            // dump($filter);
         
-        $filterForm = $this->createForm('AppBundle\Form\Type\VacancyFilterType', $filter); // $room
+        $filterForm = $this->createForm('AppBundle\Form\Type\VacancyFilterType', $filter);
         $filterForm->handleRequest($request);
         
         if ($filterForm->isValid())

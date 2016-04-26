@@ -115,6 +115,7 @@ class UserAdmController extends Controller
      * @Route(":{id}/edit", name="admin_user_edit", requirements={
      * "id": "\d+"
      * })
+     * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, $id)
     {

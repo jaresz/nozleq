@@ -41,7 +41,7 @@ class ReservationManager extends AbstractClassWithEntityManager
          * Wychodzi na to samo co bez transakcji i ze sprwadzeniem efektu.
          * Można jednak tą transakcje łatwo rozbudować.
          */
-        $em->transactional(function ($em) use ($resouce, $reservarionDay, $maker, $reservationName, $newReservation) {
+        $em->transactional(function (ObjectManager $em) use ($resouce, $reservarionDay, $maker, $reservationName, $newReservation) {
             $newReservation->setResource($resouce);
             $newReservation->setDay($reservarionDay);
             $newReservation->setName($reservationName);

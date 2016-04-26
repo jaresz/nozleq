@@ -17,16 +17,14 @@ class UserEditType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //$translator = $this->get('translator');
         $builder
-        //->setAction($this->form_action)
         ->add('username', TextType::class, array('label' => 'Login'))
         ->add('firstName', TextType::class, array('label' => 'Imię'))
         ->add('name', TextType::class, array('label' => 'Nazwisko'))
         ->add('email', TextType::class, array('label' => 'Email'))
         ->add('enabled', NULL, array('label' =>  'Konto włączone'))
-        ->add('isAdmin', CheckboxType::class 	, array('label' =>  'Administrator', 'required' => false))
-        ->add('isClerk', CheckboxType::class 	, array('label' =>  'Recepcjonista', 'required' => false))
+        ->add('roAdmin', CheckboxType::class 	, array('label' =>  'Administrator', 'required' => false))
+        ->add('roClerk', CheckboxType::class 	, array('label' =>  'Recepcjonista', 'required' => false))
 
         ;
     }

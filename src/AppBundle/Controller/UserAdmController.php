@@ -119,7 +119,7 @@ class UserAdmController extends Controller
     public function editAction(Request $request, $id)
     {
         $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->find($id);
+        $user = $userManager->findUserBy(['id' => $id]);
         if (! is_object($user) || ! $user instanceof UserInterface)
             throw new AccessDeniedException('Brak dostępu.');
         
@@ -133,24 +133,11 @@ class UserAdmController extends Controller
             return $event->getResponse();
         }
         
-        $form = $this->createForm(UserEditType::class, $user);
-        
+        $form = $this->createForm(UserEditType::class, $user);        
         $form->handleRequest($request);
         
         if ($form->isValid()) {            
-            $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
-            
-            $userManager->updateUser($user);
-            
-            if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('admin_user_index');
-                $response = new RedirectResponse($url);
-            }
-            
-            $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-            
-            return $response;
+            return $this->editSave($request, $dispatcher, $userManager, $user, $form);
         }
         
         return $this->render('UserAdm/edit.html.twig', array(
@@ -158,6 +145,21 @@ class UserAdmController extends Controller
             'title' => self::ENTITY_TITLE . ' - Edycja',
             'routeNames' => self::getRouteNames()
         ));
+    }
+    
+    public function editSave(Request $request, \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher, $userManager, $user, $form)
+    {
+        $event = new FormEvent($form, $request);
+        $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
+        $userManager->updateUser($user);
+        
+        if (null === $response = $event->getResponse()) {
+            $url = $this->generateUrl('admin_user_index');
+            $response = new RedirectResponse($url);
+        }
+        
+        $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+        return $response;
     }
 
     /**
@@ -168,8 +170,8 @@ class UserAdmController extends Controller
     public function changePassAction(Request $request, $id)
     {
         $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->find( $id );
-        if (! is_object($user) || ! $user instanceof UserInterface) 
+        $user = $userManager->findUserBy(['id' => $id]);
+        if (! is_object($user) || ! $user instanceof UserInterface)
             throw new AccessDeniedException('Brak dostępu.');
         
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
@@ -178,31 +180,15 @@ class UserAdmController extends Controller
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_INITIALIZE, $event);
         
-        if (null !== $event->getResponse()) {
+        if (null !== $event->getResponse())
             return $event->getResponse();
-        }
         
         $form = $this->createForm(UserChangePassType::class, $user);
         
         $form->handleRequest($request);
         
         if ($form->isValid()) {
-            /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-            // $userManager = $this->get('fos_user.user_manager');
-            
-            $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
-            
-            $userManager->updateUser($user);
-            
-            if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('admin_user_index');
-                $response = new RedirectResponse($url);
-            }
-            
-            $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-            
-            return $response;
+            return $this->changePass($request, $id, $dispatcher, $userManager, $form, $user);
         }
         
         return $this->render('BaseCRUD/edit.html.twig', array(
@@ -210,6 +196,23 @@ class UserAdmController extends Controller
             'title' => self::ENTITY_TITLE . ' - Edycja',
             'routeNames' => self::getRouteNames()
         ));
+    }
+
+    public function changePass(Request $request, $id, \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher, $userManager, $form, $user)
+    {
+        $event = new FormEvent($form, $request);
+        $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
+        
+        $userManager->updateUser($user);
+        
+        if (null === $response = $event->getResponse()) {
+            $url = $this->generateUrl('admin_user_index');
+            $response = new RedirectResponse($url);
+        }
+        
+        $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+        
+        return $response;
     }
 
     /**
@@ -221,9 +224,9 @@ class UserAdmController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(array(
+        $user = $userManager->findUserBy([
             'id' => $id
-        ));
+        ]);
         
         if (! $user) {
             throw $this->createNotFoundException('Nie znaleziono obiektu do unicestwienia.');

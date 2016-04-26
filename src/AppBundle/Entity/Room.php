@@ -14,7 +14,7 @@ use AppBundle\Entity\Traits;
  */
 class Room extends Resource
 {
-    use Traits\BaseEntityTrait;
+    
     
     /**
      * @ORM\Column(type="integer", unique=true, nullable=true)

@@ -36,13 +36,19 @@ class Reservation
      * @ORM\Column(type="datetime")
      */
     protected $expires;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    protected $createdByUser;
 
     public function __construct()
     {
-        parent::__construct();
     
         // Dodatkowy niepuliczny identyfikar obiektu/rekordu - używany jako dodatkowy np. przy kasowaniu
         $this->setRapas(substr(md5(rand(199, 9999)), 0, 10));
+        $this->setExpires((new \DateTime())->add(new \DateInterval('P2D')));
     }   
 
     /**
@@ -221,5 +227,29 @@ class Reservation
     public function getRapas()
     {
         return $this->rapas;
+    }
+
+    /**
+     * Set createdByUser
+     *
+     * @param \AppBundle\Entity\User $createdByUser
+     *
+     * @return Reservation
+     */
+    public function setCreatedByUser(\AppBundle\Entity\User $createdByUser = null)
+    {
+        $this->createdByUser = $createdByUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createdByUser
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCreatedByUser()
+    {
+        return $this->createdByUser;
     }
 }

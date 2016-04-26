@@ -22,7 +22,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue('' != $rp);
         $this->assertTrue(strlen($rp) > 5);
         $this->assertEquals(self::TEST_USER_FIRST_NAME, $testowy->getFirstName());
-        $this->assertEquals(self::TEST_USER_LAST_NAME, $testowy->getLastName());
+        $this->assertEquals(self::TEST_USER_LAST_NAME, $testowy->getName());
         
     }
 }

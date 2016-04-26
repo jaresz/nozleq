@@ -9,6 +9,7 @@ use AppBundle\Entity\Room;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use AppBundle\Traits as AppTraits;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use AppBundle\Entity\Reservation;
 
 /**
  * Room controller.
@@ -134,6 +135,50 @@ class RoomController extends Controller
             return $this->redirectToRoute('room_index');
         }
         
+        return $this->render('BaseCRUD/edit.html.twig', array(
+            'room' => $room,
+            'form' => $editForm->createView(),
+            'routeNames' => self::getRouteNames(),
+            'title' => self::ENTITY_TITLE
+        ));
+    }
+    
+    
+    /**
+     * Displays a form to reserve an existing Room entity.
+     *
+     * @Route(":{id}/book_on:{day}", name="room_book", defaults={"day" = 0 } , requirements={
+     * "id": "\d+"
+     * })
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function bookAction(Request $request, Room $room, $id, $day)
+    {
+        $newReserva = new Reservation();
+        $newReserva->setResource($room);
+        $newReserva->setName("Rezerwacja dla ".$this->getUser()->getName());
+        if (!$day)
+            $newReserva->setDay((new \DateTime())->add(new \DateInterval('P1D')));
+        else
+            $newReserva->setDay(new \DateTime($day));
+        
+        $editForm = $this->createForm('AppBundle\Form\Type\RoomReservationType', $newReserva);
+        $editForm->handleRequest($request);
+    
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            
+            $resMen = $this->get('app.reservation_manager');
+            $booked = $resMen->makeReservation($room, $newReserva->getDay(), $this->getUser(), $newReserva->getName());
+            
+            if ($booked)
+                $this->addFlash('success', "Rezerwacja nr ".$booked->getId()." została zapisana.");
+            else 
+                $this->addFlash('warning', "Niestety, nie udało się zrobić rezerwacji.\nSpróbuj wybrać inny zasób lub datę.");
+            //dump($booked);
+            //return $this->redirectToRoute('room_index');
+        }
+    
         return $this->render('BaseCRUD/edit.html.twig', array(
             'room' => $room,
             'form' => $editForm->createView(),

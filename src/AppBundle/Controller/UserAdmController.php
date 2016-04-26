@@ -147,7 +147,7 @@ class UserAdmController extends Controller
         ));
     }
     
-    public function editSave(Request $request, \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher, $userManager, $user, $form)
+    protected function editSave(Request $request, \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher, $userManager, $user, $form)
     {
         $event = new FormEvent($form, $request);
         $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
@@ -198,7 +198,7 @@ class UserAdmController extends Controller
         ));
     }
 
-    public function changePass(Request $request, $id, \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher, $userManager, $form, $user)
+    protected function changePass(Request $request, $id, \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher, $userManager, $form, $user)
     {
         $event = new FormEvent($form, $request);
         $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);

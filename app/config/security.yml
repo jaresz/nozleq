@@ -30,4 +30,7 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/clerk, role: ROLE_CLERK }
         - { path: ^/hello, role: ROLE_USER }
+    access_denied_url: /login
+    

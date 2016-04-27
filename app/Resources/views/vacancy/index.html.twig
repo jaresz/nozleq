@@ -34,8 +34,13 @@
 			<td>{% if oneRow.minibar %}Tak{% else %}Nie{% endif %}</td>
 			<td>{% if oneRow.airConditioned %}Tak{% else %}Nie{% endif %}</td>
 
-			<td><a href="{{ path('book_on', {'id': oneRow.id, 'day': day|date('Y-m-d') }) }}"
+			<td>
+			{% if is_granted("ROLE_USER") %}
+			<a href="{{ path('book_on', {'id': oneRow.id, 'day': day|date('Y-m-d') }) }}"
 				class="btn btn-default" title="Edycja">Rezerwuj</a>
+			{% else %}
+			Zaloguj się by zarezerwować
+			{% endif %}
 				</td>
 		</tr>
 		{% endfor %}

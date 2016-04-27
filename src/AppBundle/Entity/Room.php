@@ -13,11 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Room extends Resource
 {
     
-    
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $price;
+   
     
     /**
      * * @ORM\Column(type="text", nullable=true)
@@ -314,6 +310,8 @@ class Room extends Resource
     {
         return $this->rapas;
     }
+
+
 
     /**
      * Set price

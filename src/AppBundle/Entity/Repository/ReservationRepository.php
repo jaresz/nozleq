@@ -39,25 +39,5 @@ class ReservationRepository extends \Doctrine\ORM\EntityRepository
         return $ten;
     }
  
-    /**
-     * Zwraca wolne pokoje danego dnia 
-     * @param string $day
-     */
-    public function getFreeRooms($day)
-    {
-        $qb = $this->createQueryBuilder('b')
-        ->select('Room')
-        ->from('AppBundle:Room', 'Room')
-        ->where('Room NOT IN (
-                    SELECT Res.id
-                    FROM AppBundle:Reservation Rez,
-                    AppBundle:Resource Res
-                    WHERE Rez.day = :day AND Rez.resource = Res
-                )')
-                        ->setParameter('day', $day)
-                        ->addOrderBy('Room.name', 'ASC');
-
-        return  $qb->getQuery()->getResult();
-    }
     
 }

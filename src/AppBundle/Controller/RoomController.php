@@ -13,8 +13,10 @@ use AppBundle\Entity\Reservation;
 
 /**
  * Room controller.
- *
- * @Route("/room")
+ * "admin" w ścieżce jest istotne - bazują na nim uprawnienia
+ * @Route("admin/room")
+ * @Security("has_role('ROLE_ADMIN')")
+ * Dodatkowo cały kontroler jest tylko dla administratorów.
  */
 class RoomController extends Controller
 {
@@ -69,8 +71,6 @@ class RoomController extends Controller
         
         $rooms = $em->getRepository('AppBundle:Room')->getRoomsReservedOn($day);
         
-        dump($rooms);
-        
         return $this->render('reservation/index.html.twig', array(
             'reservations' => $rooms,
             'routeNames' => self::getRouteNames(),
@@ -78,34 +78,6 @@ class RoomController extends Controller
         ));
     }
 
-    /**
-     * Lists reserved Rooms.
-     *
-     * @Route("/free_rooms", defaults={"day" = 0 }, name="free_rooms_index")
-     * @Route("/free_rooms_on:{day}", name="free_rooms_on_index")
-     * @Method("GET")
-     */
-    public function freeRoomsAction(Request $request, $day)
-    {
-        $em = $this->getDoctrine()->getManager();
-        
-        if (! $day)
-            $day = new \DateTime();
-        
-        $rooms = $em->createQuery('SELECT rm, rs FROM AppBundle:Room rm
-            LEFT JOIN rm.reservations rs
-            WHERE rs.day != :day OR rs.day IS NULL')
-            ->setParameter('day', $day)
-            ->getResult();
-        
-        dump($rooms);
-        
-        return $this->render('room/index.html.twig', array(
-            'rooms' => $rooms,
-            'routeNames' => self::getRouteNames(),
-            'title' => self::ENTITIES_TITLE
-        ));
-    }
 
     /**
      * Creates a new Room entity.
@@ -189,7 +161,6 @@ class RoomController extends Controller
             'title' => self::ENTITY_TITLE
         ));
     }
-
 
     /**
      * Deletes a Room entity.

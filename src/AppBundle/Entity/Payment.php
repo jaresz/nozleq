@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Interfaces\BookableResourceInterface;
+use AppBundle\Entity\Interfaces\BookablePaymentInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Traits;
@@ -10,25 +10,26 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Klasa wszystkich typów użytkowników systemu
- * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\ResourceRepository")
- * @ORM\InheritanceType("JOINED")
- * @ORM\Table(name="resource")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\PaymentRepository")
+ *
+ * @ORM\Table(name="Payment")
  * @ORM\HasLifecycleCallbacks
  */
-class Resource
+class Payment
 {
     use Traits\BaseEntityTrait;
-    
+
+    /**
+     * Rezerwacja
+     * @ORM\ManyToOne(targetEntity="Reservation", inversedBy="payments")
+     * @Assert\NotBlank()
+     */
+    protected $reservation;
+
     /**
      * @ORM\Column(type="integer")
      */
-    protected $price;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="resource")
-     */
-    protected $reservations;
-
+    protected $amount;
     /**
      * Get id
      *
@@ -44,7 +45,7 @@ class Resource
      *
      * @param string $name
      *
-     * @return Resource
+     * @return Payment
      */
     public function setName($name)
     {
@@ -68,7 +69,7 @@ class Resource
      *
      * @param \DateTime $created
      *
-     * @return Resource
+     * @return Payment
      */
     public function setCreated($created)
     {
@@ -92,7 +93,7 @@ class Resource
      *
      * @param \DateTime $updated
      *
-     * @return Resource
+     * @return Payment
      */
     public function setUpdated($updated)
     {
@@ -125,7 +126,7 @@ class Resource
      *
      * @param \AppBundle\Entity\Reservation $reservation
      *
-     * @return Resource
+     * @return Payment
      */
     public function addReservation(\AppBundle\Entity\Reservation $reservation)
     {
@@ -159,7 +160,7 @@ class Resource
      *
      * @param string $rapas
      *
-     * @return Resource
+     * @return Payment
      */
     public function setRapas($rapas)
     {
@@ -179,26 +180,64 @@ class Resource
     }
 
     /**
-     * Set price
+     * Set reservations
      *
-     * @param integer $price
+     * @param \AppBundle\Entity\Reservation $reservations
      *
-     * @return Resource
+     * @return Payment
      */
-    public function setPrice($price)
+    public function setReservations(\AppBundle\Entity\Reservation $reservations = null)
     {
-        $this->price = $price;
+        $this->reservations = $reservations;
 
         return $this;
     }
 
     /**
-     * Get price
+     * Set reservation
+     *
+     * @param \AppBundle\Entity\Reservation $reservation
+     *
+     * @return Payment
+     */
+    public function setReservation(\AppBundle\Entity\Reservation $reservation = null)
+    {
+        $this->reservation = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Get reservation
+     *
+     * @return \AppBundle\Entity\Reservation
+     */
+    public function getReservation()
+    {
+        return $this->reservation;
+    }
+
+    /**
+     * Set amount
+     *
+     * @param integer $amount
+     *
+     * @return Payment
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get amount
      *
      * @return integer
      */
-    public function getPrice()
+    public function getAmount()
     {
-        return $this->price;
+        return $this->amount;
     }
 }

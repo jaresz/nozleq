@@ -48,6 +48,7 @@ class ReservationManager extends AbstractClassWithEntityManager
          */
         $em->transactional(function (ObjectManager $em) use ($resouce, $reservarionDay, $maker, $reservationName, $newReservation) {
             $newReservation->setResource($resouce);
+            $newReservation->setPrice($resouce->getPrice()); // cena zostaje zamrożona (kopia) w momencie rezerwacji
             $newReservation->setDay($reservarionDay);
             $newReservation->setName($reservationName);
             $newReservation->setCreatedByUser($maker);

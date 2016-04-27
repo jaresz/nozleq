@@ -16,6 +16,9 @@ function rebinduj()
 	/*
 	 *  Funkcja wysyływania po wyrenderowaniu, lub zmianie dokumentu
 	*/
+	$( "#target" ).click(function() {
+		$( this ).attr("disabled", true);
+	});
 }
 
 

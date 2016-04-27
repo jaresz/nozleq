@@ -60,7 +60,7 @@ class VacancyController extends Controller
             if (! $day)
                 $day = $filter->day;
         
-        $rooms = $em->getRepository('AppBundle:Reservation')->getFreeRooms($day);
+        $rooms = $em->getRepository('AppBundle:Room')->getFreeRooms($day);
                 
             
         return $this->render('vacancy/index.html.twig', array(
@@ -75,7 +75,7 @@ class VacancyController extends Controller
     /**
      * Displays a form to edit an existing Room entity.
      *
-     * @Route(":{id}/book_on:{day}", name="book_on", requirements={
+     * @Route("r:{id}/book_on:{day}", name="book_on", requirements={
      * "id": "\d+"
      * })
      * @Method({"GET", "POST"})
@@ -95,7 +95,7 @@ class VacancyController extends Controller
             $booked = $resMen->makeReservation($room, $daydt, $this->getUser(), $bb->getName());
             
             if ($booked)
-                $this->addFlash('success', "Rezerwacja nr została utworzona. Numer rezerwacji: ".$booked->getId()." Aby zachować rezerwację zrób przeelew na nasze konto w terminie do ".$booked->getExpires()->format('Y-m-d H:i:s') );
+                $this->addFlash('success', "Rezerwacja została utworzona. Numer rezerwacji: ".$booked->getId()." Aby zachować rezerwację zrób przeelew na nasze konto w terminie do ".$booked->getExpires()->format('Y-m-d H:i:s').". \n Opłacić lub usunąć rezerwację możesz z poziomu podstrony Moje rezerwacje." );
             else
                 $this->addFlash('warning', "Niestety, nie udało się zrobić rezerwacji.\nSpróbuj wybrać inny zasób lub datę.");
             

@@ -13,6 +13,22 @@
                 <th>Data rezerwacji</th>
                 <td>{{ reservation.day|date('Y-m-d') }}</td>
             </tr>
+             <tr>
+                <th>Cena</th>
+                <td>{{ reservation.price }}</td>
+            </tr>
+            <tr>
+                <th>Kwota zapłacona</th>
+                <td>{{ reservation.paidAmount }}</td>
+            </tr>
+            <tr>
+                <th>Opłacone</th>
+                <td>{% if reservation.paid %}Tak{% else %}Nie{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Wygasa</th>
+                <td>{{ reservation.expires|date('Y-m-d H:i:s') }}</td>
+            </tr>
         	<tr>
                 <th>Name lub numer pokoju</th>
                 <td>{{ room.name }}</td>

@@ -20,8 +20,10 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use AppBundle\Traits as AppTraits;
 
 /**
+ * "admin" w ścieżce jest istotne - bazują na nim uprawnienia
  * @Route("/admin/user")
  * @Security("has_role('ROLE_ADMIN')")
+ * Dodatkowo cały kontroler jest tylko dla administratorów.
  */
 class UserAdmController extends Controller
 {
@@ -122,7 +124,9 @@ class UserAdmController extends Controller
     public function editAction(Request $request, $id)
     {
         $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(['id' => $id]);
+        $user = $userManager->findUserBy([
+            'id' => $id
+        ]);
         if (! is_object($user) || ! $user instanceof UserInterface)
             throw new AccessDeniedException('Brak dostępu.');
         
@@ -136,10 +140,10 @@ class UserAdmController extends Controller
             return $event->getResponse();
         }
         
-        $form = $this->createForm(UserEditType::class, $user);        
+        $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
         
-        if ($form->isValid()) {            
+        if ($form->isValid()) {
             return $this->editSave($request, $dispatcher, $userManager, $user, $form);
         }
         
@@ -149,7 +153,7 @@ class UserAdmController extends Controller
             'routeNames' => self::getRouteNames()
         ));
     }
-    
+
     protected function editSave(Request $request, \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher, $userManager, $user, $form)
     {
         $event = new FormEvent($form, $request);
@@ -174,7 +178,9 @@ class UserAdmController extends Controller
     public function changePassAction(Request $request, $id)
     {
         $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(['id' => $id]);
+        $user = $userManager->findUserBy([
+            'id' => $id
+        ]);
         if (! is_object($user) || ! $user instanceof UserInterface)
             throw new AccessDeniedException('Brak dostępu.');
         
@@ -224,7 +230,6 @@ class UserAdmController extends Controller
      * "id": "\d+"
      * })
      * @Method({"GET", "POST", "DELETE"})
-     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, $id)
     {

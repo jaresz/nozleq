@@ -10,6 +10,8 @@
                 <th>Pojemność</th>
                 
                 <th>Dzień</th>
+                <th>Wygasa</th>
+                
                 <th>Nazwa rezerwacji</th>
                 <th>Złożył</th>
                 
@@ -24,6 +26,8 @@
                 <td>{{ reservation.resource.capacity }}</td>
 				
 				<td>{{ reservation.day|date('Y-m-d') }}</td>
+				<td>{{ reservation.expires|date('Y-m-d') }}</td>
+				
                 <td>{{ reservation.name }}</td>
                 <td>{{ reservation.createdByUser }}</td>
                 

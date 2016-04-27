@@ -31,11 +31,23 @@ class Reservation
      */
     protected $day;
     
+
+    /**
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="reservation")
+     */
+    protected $payments;
+    
     /**
      * Data wygasania rezerwacji
      * @ORM\Column(type="datetime")
      */
     protected $expires;
+    
+    /**
+     * Cena
+     * @ORM\Column(type="integer")
+     */
+    protected $price;
     
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -251,5 +263,80 @@ class Reservation
     public function getCreatedByUser()
     {
         return $this->createdByUser;
+    }
+
+    /**
+     * Set price
+     *
+     * @param integer $price
+     *
+     * @return Reservation
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return integer
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Add payment
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     *
+     * @return Reservation
+     */
+    public function addPayment(\AppBundle\Entity\Payment $payment)
+    {
+        $this->payments[] = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Remove payment
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     */
+    public function removePayment(\AppBundle\Entity\Payment $payment)
+    {
+        $this->payments->removeElement($payment);
+    }
+
+    public function getPaidAmount()
+    {
+        $amount=0;
+        foreach($this->payments as $onepayment)
+        {
+            $amount+=$onepayment->getAmount();
+        }
+        return $amount;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function getPaid()
+    {
+        return $this->price <= $this->getPaidAmount();
+    }
+    /**
+     * Get payments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPayments()
+    {
+        return $this->payments;
     }
 }

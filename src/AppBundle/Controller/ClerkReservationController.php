@@ -44,9 +44,7 @@ class ClerkReservationController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        
-        dump($this->getUser());
-        
+         
         $reservations = $em->getRepository('AppBundle:Reservation')->findAll();
         
         return $this->render('reservation/index.html.twig', array(

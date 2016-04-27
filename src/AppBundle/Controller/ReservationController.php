@@ -45,8 +45,6 @@ class ReservationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        dump($this->getUser());
-        
         $reservations = $em->getRepository('AppBundle:Reservation')->findByCreatedByUser($this->getUser());
         
         return $this->render('reservation/index.html.twig', array(
@@ -144,7 +142,7 @@ class ReservationController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($reservation);
                 $em->flush();
-                $this->addFlash('success', 'Obiekt został usunięty.');
+                $this->addFlash('success', 'Rezerwacja została usunięta.');
             }
         }
         

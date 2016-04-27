@@ -57,8 +57,8 @@ class User extends BaseUser
 
 
     /**
-     * @Assert\NotBlank(groups={"Registration", "Profile"})
-     * @Assert\Length(min=4, groups={"Registration", "Profile"})
+     * @Assert\NotBlank(groups={"Strict", "AdminEdit", "Registration", "Profile"})
+     * @Assert\Length(min=4, groups={"Strict", "AdminEdit", "Registration", "Profile"})
      */
     protected $email;
 

@@ -32,6 +32,7 @@ class UserType extends AbstractType
             'required' => true
         ))
         ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
+        ->add('phone', TextType::class, array('label' => 'Telefon'))
         ->add('firstName', TextType::class, array('label' => 'form.first_name', 'translation_domain' => 'FOSUserBundle', 'required' => true))
         ->add('name', TextType::class, array('label' => 'form.last_name', 'translation_domain' => 'FOSUserBundle', 'required' => true))
         ->add('roAdmin', CheckboxType::class 	, array('label' =>  'form.is_admin', 'translation_domain' => 'FOSUserBundle', 'required' => false))
@@ -47,7 +48,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\User',
-            'validation_groups' => array('registration', 'Strict'),
+            'validation_groups' => array('Registration', 'Strict'),
         ));
     }
 }

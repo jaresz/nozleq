@@ -32,8 +32,8 @@ class UserType extends AbstractType
             'required' => true
         ))
         ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
-        ->add('firstName', TextType::class, array('label' => 'form.first_name', 'translation_domain' => 'FOSUserBundle'))
-        ->add('name', TextType::class, array('label' => 'form.last_name', 'translation_domain' => 'FOSUserBundle'))
+        ->add('firstName', TextType::class, array('label' => 'form.first_name', 'translation_domain' => 'FOSUserBundle', 'required' => true))
+        ->add('name', TextType::class, array('label' => 'form.last_name', 'translation_domain' => 'FOSUserBundle', 'required' => true))
         ->add('roAdmin', CheckboxType::class 	, array('label' =>  'form.is_admin', 'translation_domain' => 'FOSUserBundle', 'required' => false))
         ->add('roClerk', CheckboxType::class 	, array('label' =>  'form.is_clerk', 'translation_domain' => 'FOSUserBundle', 'required' => false))
         

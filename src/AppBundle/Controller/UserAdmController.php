@@ -41,6 +41,7 @@ class UserAdmController extends Controller
 
     /**
      * @Route("/", name="admin_user_index")
+     * @Method({"GET"})
      */
     public function indexAction(Request $request)
     {
@@ -56,6 +57,7 @@ class UserAdmController extends Controller
 
     /**
      * @Route("/new", name="admin_user_new")
+     * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
@@ -221,6 +223,7 @@ class UserAdmController extends Controller
      * @Route(":{id}/delete", name="admin_user_delete", requirements={
      * "id": "\d+"
      * })
+     * @Method({"GET", "POST", "DELETE"})
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, $id)

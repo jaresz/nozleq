@@ -36,7 +36,7 @@ class Resource
     {
         $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
         // ustawianie dodatkowego niepulicznego identyfikara obiektu/rekordu - używany jako dodatkowy np. przy kasowaniu
-        $this->setRapas(substr(md5(rand(199, 9999)), 0, 20));
+        $this->setRapas(substr(md5(rand(1200, 9990)), 0, 20));
     }
 
     /**

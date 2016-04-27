@@ -33,44 +33,10 @@ class Payment
    
     public function __construct()
     {
-        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
         // ustawianie dodatkowego niepulicznego identyfikara obiektu/rekordu - używany jako dodatkowy np. przy kasowaniu
         $this->setRapas(substr(md5(rand(199, 9999)), 0, 20));
     }
 
-    /**
-     * Add reservation
-     *
-     * @param \AppBundle\Entity\Reservation $reservation
-     *
-     * @return Payment
-     */
-    public function addReservation(\AppBundle\Entity\Reservation $reservation)
-    {
-        $this->reservations[] = $reservation;
-
-        return $this;
-    }
-
-    /**
-     * Remove reservation
-     *
-     * @param \AppBundle\Entity\Reservation $reservation
-     */
-    public function removeReservation(\AppBundle\Entity\Reservation $reservation)
-    {
-        $this->reservations->removeElement($reservation);
-    }
-
-    /**
-     * Get reservations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getReservations()
-    {
-        return $this->reservations;
-    }
 
     /**
      * Set rapas
@@ -94,20 +60,6 @@ class Payment
     public function getRapas()
     {
         return $this->rapas;
-    }
-
-    /**
-     * Set reservations
-     *
-     * @param \AppBundle\Entity\Reservation $reservations
-     *
-     * @return Payment
-     */
-    public function setReservations(\AppBundle\Entity\Reservation $reservations = null)
-    {
-        $this->reservations = $reservations;
-
-        return $this;
     }
 
     /**

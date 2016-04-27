@@ -26,7 +26,7 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"Strict", "AdminEdit", "Registration", "Profile"})
      */
     protected $name;
 
@@ -49,8 +49,8 @@ class User extends BaseUser
     
     
     /**
-     * @Assert\NotBlank(groups={"Registration", "Profile"})
-     * @Assert\Length(min=5, groups={"Registration", "Profile"})
+     * @Assert\NotBlank(groups={"Strict", "AdminEdit", "Registration", "Profile"})
+     * @Assert\Length(min=5, groups={"Strict", "AdminEdit", "Registration", "Profile"}) 
      */
     protected $username;
 
@@ -63,14 +63,14 @@ class User extends BaseUser
     protected $email;
 
     /**
-     * @Assert\NotBlank(groups={"Registration", "ChangePassword"})
-     * @Assert\Length(min=8, groups={"Registration", "ChangePassword"})
+     * @Assert\NotBlank(groups={"Strict", "Registration", "ChangePassword"})
+     * @Assert\Length(min=8, groups={"Strict", "Registration", "ChangePassword"})
      */
     protected $plainPassword;
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(groups={"Registration", "Profile"})
+     * @Assert\NotBlank(groups={"Strict", "AdminEdit", "Registration", "Profile"})
      */
     protected $firstName;
 

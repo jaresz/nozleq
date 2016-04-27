@@ -22,6 +22,7 @@ class UserEditType extends AbstractType
         ->add('firstName', TextType::class, array('label' => 'Imię'))
         ->add('name', TextType::class, array('label' => 'Nazwisko'))
         ->add('email', TextType::class, array('label' => 'Email'))
+        ->add('phone', TextType::class, array('label' => 'Telefon'))
         ->add('enabled', NULL, array('label' =>  'Konto włączone'))
         ->add('roAdmin', CheckboxType::class 	, array('label' =>  'Administrator', 'required' => false))
         ->add('roClerk', CheckboxType::class 	, array('label' =>  'Recepcjonista', 'required' => false))
@@ -36,7 +37,7 @@ class UserEditType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\User',
-            'validation_groups' => array('admin_edit'),
+            'validation_groups' => array('AdminEdit'),
         ));
     }
 }

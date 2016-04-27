@@ -1,22 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Pokoje</h1>
-
-
-
-<div class="forbtns">
-<a href="{{ path('room_new') }}" class="btn btn-success" >
-  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nowy
-</a>
-</div>
-
-
-
-{% for reservation in reservations %}
-
- <hr>
-{% endfor %}
+    <h1>{{ title }}</h1>
 
     <table class="table table-hover">
         <thead>
@@ -35,7 +20,7 @@
         {% for reservation in reservations %}
 
             <tr>
-                <td><a href="{{ path('room_show', { 'id': reservation.resource.id }) }}">{{ reservation.resource.name }}</a></td>
+                <td><a href="{{ path(routeNames.show, { 'id': reservation.id }) }}">{{ reservation.resource.name }}</a></td>
                 <td>{{ reservation.resource.capacity }}</td>
 				
 				<td>{{ reservation.day|date('Y-m-d') }}</td>
@@ -43,8 +28,8 @@
                 <td>{{ reservation.createdByUser }}</td>
                 
                 <td>
-                	<a href="{{ path('room_edit', {'id': reservation.resource.id }) }}"  class="btn btn-default" title="Edycja"><span class="glyphicon glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span> <span class="sr-only">Edycja</span></a>
-        			<a href="{{ path('room_show', {'id': reservation.resource.id }) }}"  class="btn btn-default" title="Podgląd"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> <span class="sr-only">Podgląd</span></a>                    
+                	<a href="{{ path(routeNames.edit, {'id': reservation.id }) }}"  class="btn btn-default" title="Edycja"><span class="glyphicon glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span> <span class="sr-only">Edycja</span></a>
+        			<a href="{{ path(routeNames.show, {'id': reservation.id }) }}"  class="btn btn-default" title="Podgląd"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> <span class="sr-only">Podgląd</span></a>                    
                 </td>
             </tr>
          

@@ -15,7 +15,8 @@ use AppBundle\Entity\BookingButterfly;
 /**
  * Obługa wolnych pokoi
  *
- * @Route("/vacancy")
+ * @Route("/")
+ *
  */
 class VacancyController extends Controller
 {
@@ -37,7 +38,7 @@ class VacancyController extends Controller
 
     /**
      * Lists reserved Rooms.
-     *
+     * 
      * @Route("/", defaults={"day" = 0 }, name="vacancy_index")
      * @Route("/on:{day}", name="vacancy_on_index")
      * @Method({"GET"})
@@ -94,7 +95,7 @@ class VacancyController extends Controller
             $booked = $resMen->makeReservation($room, $daydt, $this->getUser(), $bb->getName());
             
             if ($booked)
-                $this->addFlash('success', "Rezerwacja nr została utworzona. Numer rezerwacji: ".$booked->getId());
+                $this->addFlash('success', "Rezerwacja nr została utworzona. Numer rezerwacji: ".$booked->getId()." Aby zachować rezerwację zrób przeelew na nasze konto w terminie do ".$booked->getExpires()->format('Y-m-d H:i:s') );
             else
                 $this->addFlash('warning', "Niestety, nie udało się zrobić rezerwacji.\nSpróbuj wybrać inny zasób lub datę.");
             

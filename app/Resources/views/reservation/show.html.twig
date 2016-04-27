@@ -1,10 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Pokój</h1>
+    <h1>{{ title }}</h1>
 
     <table class="table vietab">
         <tbody>
+        	<tr>
+                <th>Nazwa rezerwacji</th>
+                <td>{{ reservation.name }}</td>
+            </tr>
+            <tr>
+                <th>Data rezerwacji</th>
+                <td>{{ reservation.day|date('Y-m-d') }}</td>
+            </tr>
         	<tr>
                 <th>Name lub numer pokoju</th>
                 <td>{{ room.name }}</td>
@@ -25,18 +33,7 @@
                 <th>Klimatyzacja</th>
                 <td>{% if room.airConditioned %}Tak{% else %}Nie{% endif %}</td>
             </tr>
-            <tr>
-                <th>Utworzył</th>
-                <td>{{ room.CreatedByUser }}</td>
-            </tr>
-            <tr>
-                <th>Utworzono</th>
-                <td>{% if room.created %}{{ room.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Zmodyfikowano</th>
-                <td>{% if room.updated %}{{ room.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
+			
         </tbody>
     </table>
 
@@ -45,10 +42,12 @@
 	<div class="col-sm-3"></div>
 	
 	<div class="col-sm-2">
-		<a href="{{ path('room_index') }}" class="btn btn-default btn-block">Powrót do listy</a>
+		<a href="{{ path(routeNames.index) }}" class="btn btn-default btn-block">Powrót do listy</a>
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ path('room_edit', { 'id': room.id }) }}" class="btn btn-primary btn-block">Edycja</a>
+	{% if not is_granted("ROLE_CLERK") %}	
+		<a href="javascript:alert('Automatyczne opłacanie nie funkcjonuje. Zrób przelew.');" class="btn btn-default btn-block">Opłać</a>
+	{% endif %}
 	</div>
 	<div class="col-sm-2">
 		{{ form_start(delete_form, {'attr': {'onsubmit':'return confirm("Czy na pewno usunąć?");'} } ) }}

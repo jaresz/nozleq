@@ -16,7 +16,7 @@ class DefaultController extends Controller
 {
     /**
      * Kontroler strony domowej
-     * @Route("/", name="homepage")
+     * @Route("/about", name="about")
      * @Method({"GET"})
      */
     public function indexAction(Request $request)

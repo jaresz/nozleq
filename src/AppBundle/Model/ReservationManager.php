@@ -9,6 +9,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 class ReservationManager extends AbstractClassWithEntityManager
 {
 
+    /**
+     * Zwraca rezerwacje wybranego zasobu w danym dniu
+     * @param Resource $resouce
+     * @param \DateTime $reservarionDay
+     */
     public function getReservation(Resource $resouce, \DateTime $reservarionDay)
     {
         $em = $this->entityManager;

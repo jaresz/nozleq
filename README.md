@@ -1,7 +1,7 @@
 Nozleq - Rezerwacja noclegów w Hotelu
 ========================
 
-System zrobiony w celach edukacyjnych.
+System stworzony we frameworku Symfony 2.8 (w chwili tworzenia była to wersja "long-term support")
 
 Wymagania
 --------------
@@ -61,7 +61,7 @@ admin to nazwa użytkownika
 
 RazZimelen(ioWy)45! to jego hasło
 
-!Użytkownik musi mieć ROLE_ADMIN
+_Użytkownik musi mieć ROLE_ADMIN_
 
 ### Adresy RestAPI
 ```

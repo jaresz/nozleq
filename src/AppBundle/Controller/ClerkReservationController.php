@@ -131,12 +131,12 @@ class ClerkReservationController extends Controller
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($reservation->getCreatedByUser() == $this->getUser()) // tylko dla właściciela
+            
             if (md5($reservation->getRapas()) == $request->request->get('form')['harapas']) {
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($reservation);
                 $em->flush();
-                $this->addFlash('success', 'Obiekt został usunięty.');
+                $this->addFlash('success', 'Rezerwacja została usunięta.');
             }
         }
         

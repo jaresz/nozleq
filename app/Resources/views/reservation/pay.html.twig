@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Wyobraź sobie, że jesteś w serwisie płatnośći</h1>
+
+    <table class="table vietab">
+        <tbody>
+        	<tr>
+                <th>Nazwa rezerwacji</th>
+                <td>{{ reservation.name }}</td>
+            </tr>
+            <tr>
+                <th>Data rezerwacji</th>
+                <td>{{ reservation.day|date('Y-m-d') }}</td>
+            </tr>
+             <tr>
+                <th>Cena</th>
+                <td>{{ reservation.price }}</td>
+            </tr>
+            <tr>
+                <th>Kwota zapłacona</th>
+                <td>{{ reservation.paidAmount }}</td>
+            </tr>
+            <tr>
+                <th>Opłacone</th>
+                <td>{% if reservation.paid %}Tak{% else %}Nie{% endif %}</td>
+            </tr>
+			
+        </tbody>
+    </table>
+
+<div class="container-fluid">
+<div class="row">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6">
+		{{ form_start(payment_form) }}
+			 {{ form_widget(payment_form) }}
+                <input type="submit" value="Opłaciłem" class="btn btn-default btn-block">
+            {{ form_end(payment_form) }}
+	</div>
+	
+	<div class="col-sm-3"></div>
+</div>
+</div>
+    
+{% endblock %}

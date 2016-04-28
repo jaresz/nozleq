@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Reservation;
+use AppBundle\Entity\Payment;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use AppBundle\Traits as AppTraits;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -54,7 +56,6 @@ class ReservationController extends Controller
         ));
     }
 
-    
     /**
      * Finds and displays a Reservation entity.
      *
@@ -66,12 +67,12 @@ class ReservationController extends Controller
     public function showAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $reservation = $em->getRepository('AppBundle:Reservation')->findOneBy(['id'=>$id, 'createdByUser'=>$this->getUser() ]);
+        $reservation = $em->getRepository('AppBundle:Reservation')->findOneBy([
+            'id' => $id,
+            'createdByUser' => $this->getUser()
+        ]);
         
-        
-        
-        if ($reservation)
-        {
+        if ($reservation) {
             $deleteForm = $this->createDeleteForm($reservation);
             
             return $this->render('reservation/show.html.twig', array(
@@ -79,7 +80,52 @@ class ReservationController extends Controller
                 'delete_form' => $deleteForm->createView(),
                 'routeNames' => self::getRouteNames(),
                 'title' => self::ENTITY_TITLE,
-                'room'=> $reservation->getResource()
+                'room' => $reservation->getResource()
+            ));
+        }
+    }
+
+    /**
+     * Finds and displays a Reservation entity.
+     *
+     * @Route(":{id}/pay", name="reservation_pay", requirements={
+     * "id": "\d+"
+     * })
+     * @Method({"GET", "POST"})
+     */
+    public function paymentMockupAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $reservation = $em->getRepository('AppBundle:Reservation')->findOneBy([
+            'id' => $id,
+            'createdByUser' => $this->getUser()
+        ]);
+        
+        if ($reservation) {
+            $payment = new Payment();
+            $payment->setReservation($reservation);
+            
+            $payForm = $this->createMockupPaymentForm($payment);
+            $payForm->handleRequest($request);
+            
+            if ($payForm->isSubmitted()) {
+                // w zaślepce nie spr już poprawności np. $payForm->isValid()
+                $kwo = intval($payForm->getData()['amount']);
+                if ($kwo) {
+                    $payment->setName("Wirtualna płatność z zaślepki");
+                    $payment->setAmount($kwo);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($payment);
+                    $em->flush();
+                }
+            }
+            
+            return $this->render('reservation/pay.html.twig', array(
+                'reservation' => $reservation,
+                'payment_form' => $payForm->createView(),
+                'routeNames' => self::getRouteNames(),
+                'title' => self::ENTITY_TITLE,
+                'room' => $reservation->getResource()
             ));
         }
     }
@@ -91,13 +137,13 @@ class ReservationController extends Controller
      * "id": "\d+"
      * })
      * @Method({"GET", "POST"})
-     * 
      */
     public function editAction(Request $request, Reservation $reservation)
     {
         // tylko dla właściciela:
-        if ($reservation->getCreatedByUser() != $this->getUser()) throw new AccessDeniedException('Brak dostępu.');
-       
+        if ($reservation->getCreatedByUser() != $this->getUser())
+            throw new AccessDeniedException('Brak dostępu.');
+        
         $editForm = $this->createForm('AppBundle\Form\Type\ReservationType', $reservation);
         $editForm->handleRequest($request);
         
@@ -117,7 +163,6 @@ class ReservationController extends Controller
         ));
     }
 
-
     /**
      * Deletes a Reservation entity.
      *
@@ -125,25 +170,24 @@ class ReservationController extends Controller
      * "id": "\d+"
      * })
      * @Method("DELETE")
-     * 
      */
     public function deleteAction(Request $request, Reservation $reservation)
     {
         // tylko dla właściciela:
-        if ($reservation->getCreatedByUser() != $this->getUser()) throw new AccessDeniedException('Brak dostępu.');
-         
+        if ($reservation->getCreatedByUser() != $this->getUser())
+            throw new AccessDeniedException('Brak dostępu.');
         
         $form = $this->createDeleteForm($reservation);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
             if ($reservation->getCreatedByUser() == $this->getUser()) // tylko dla właściciela
-            if (md5($reservation->getRapas()) == $request->request->get('form')['harapas']) {
-                $em = $this->getDoctrine()->getManager();
-                $em->remove($reservation);
-                $em->flush();
-                $this->addFlash('success', 'Rezerwacja została usunięta.');
-            }
+                if (md5($reservation->getRapas()) == $request->request->get('form')['harapas']) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->remove($reservation);
+                    $em->flush();
+                    $this->addFlash('success', 'Rezerwacja została usunięta.');
+                }
         }
         
         return $this->redirectToRoute('reservation_index');
@@ -161,8 +205,9 @@ class ReservationController extends Controller
     private function createDeleteForm(Reservation $reservation)
     {
         // tylko dla właściciela:
-        if ($reservation->getCreatedByUser() != $this->getUser()) throw new AccessDeniedException('Brak dostępu.');
-                 
+        if ($reservation->getCreatedByUser() != $this->getUser())
+            throw new AccessDeniedException('Brak dostępu.');
+        
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('reservation_delete', array(
             'id' => $reservation->getId()
@@ -170,6 +215,18 @@ class ReservationController extends Controller
             ->setMethod('DELETE')
             ->add('harapas', HiddenType::class, array(
             'data' => md5($reservation->getRapas())
+        ))
+            ->getForm();
+    }
+
+    private function createMockupPaymentForm(Payment $payment)
+    {
+        return $this->createFormBuilder()
+            ->add('amount', IntegerType::class, array(
+            'data' => 100
+        ))
+            ->add('name', HiddenType::class, array(
+            'data' => $payment->getId()
         ))
             ->getForm();
     }

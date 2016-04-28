@@ -44,7 +44,6 @@ class ApiRoomController extends FOSRestController implements ClassResourceInterf
     
         $em = $this->getDoctrine()->getManager();
         $room = $em->getRepository('AppBundle:Room')->getA($id);
-        //$room = ['nazwa'=>'Piekny pokoj', 'price'=>2242 ];
         $view = $this->view($room, 200)->setTemplate("api/notforman.html.twig");
     
         return $this->handleView($view);
@@ -52,6 +51,9 @@ class ApiRoomController extends FOSRestController implements ClassResourceInterf
 
     public function newAction(Request $request)
     {
+        if (! $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
         return $this->createForm(RoomType::class);
     }
     /**
@@ -60,6 +62,9 @@ class ApiRoomController extends FOSRestController implements ClassResourceInterf
      */
     public function postAction(Request $request)
     {
+        if (! $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
         $room = new Room();
         $form = $this->createForm('AppBundle\Form\Type\RoomType', $room);
         $form->handleRequest($request);
@@ -81,7 +86,9 @@ class ApiRoomController extends FOSRestController implements ClassResourceInterf
     
     public function deleteAction(Request $request, Room $room)
     {
-       
+        if (! $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($room);
         $em->flush();

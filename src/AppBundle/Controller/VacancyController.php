@@ -40,7 +40,7 @@ class VacancyController extends Controller
      * Lists reserved Rooms.
      * 
      * @Route("/", defaults={"day" = 0 }, name="vacancy_index")
-     * @Route("/on:{day}", name="vacancy_on_index")
+     * @Route("/on/{day}", name="vacancy_on_index")
      * @Method({"GET"})
      */
     public function indexAction(Request $request, $day)
@@ -73,13 +73,13 @@ class VacancyController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Room entity.
+     * Rezerwowanie.
      *
-     * @Route("r:{id}/book_on:{day}", name="book_on", requirements={
+     * @Route("rezr/{id}/book_on/{day}", name="book_on", requirements={
      * "id": "\d+"
      * })
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER')")
+     * Security("has_role('ROLE_USER')")
      */
     public function bookAction(Request $request, Room $room, $id, $day)
     {

@@ -58,7 +58,7 @@ class ClerkReservationController extends Controller
     /**
      * Finds and displays a Reservation entity.
      *
-     * @Route(":{id}", name="clerk_reservation_show", requirements={
+     * @Route("/{id}", name="clerk_reservation_show", requirements={
      * "id": "\d+"
      * })
      * @Method("GET")
@@ -86,7 +86,7 @@ class ClerkReservationController extends Controller
     /**
      * Displays a form to edit an existing Reservation entity.
      *
-     * @Route(":{id}/edit", name="clerk_reservation_edit", requirements={
+     * @Route("/{id}/edit", name="clerk_reservation_edit", requirements={
      * "id": "\d+"
      * })
      * @Method({"GET", "POST"})
@@ -118,7 +118,7 @@ class ClerkReservationController extends Controller
     /**
      * Deletes a Reservation entity.
      *
-     * @Route(":{id}", name="clerk_reservation_delete", requirements={
+     * @Route("/{id}", name="clerk_reservation_delete", requirements={
      * "id": "\d+"
      * })
      * @Method("DELETE")

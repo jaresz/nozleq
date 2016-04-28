@@ -42,5 +42,5 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/clerk, role: ROLE_CLERK }
         - { path: ^/hello, role: ROLE_USER }
-    
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
     

@@ -59,7 +59,7 @@ class RoomController extends Controller
      * Lists reserved Rooms.
      *
      * @Route("/reservations_on", defaults={"day" = 0 }, name="reserved_room_index")
-     * @Route("/reservations_on:{day}", name="reserved_room_on_index")
+     * @Route("/reservations_on/{day}", name="reserved_room_on_index")
      * @Method("GET")
      */
     public function reservedIndexAction(Request $request, $day)
@@ -115,7 +115,7 @@ class RoomController extends Controller
     /**
      * Finds and displays a Room entity.
      *
-     * @Route(":{id}", name="room_show", requirements={
+     * @Route("/{id}", name="room_show", requirements={
      * "id": "\d+"
      * })
      * @Method("GET")
@@ -135,7 +135,7 @@ class RoomController extends Controller
     /**
      * Displays a form to edit an existing Room entity.
      *
-     * @Route(":{id}/edit", name="room_edit", requirements={
+     * @Route("/{id}/edit", name="room_edit", requirements={
      * "id": "\d+"
      * })
      * @Method({"GET", "POST"})
@@ -165,7 +165,7 @@ class RoomController extends Controller
     /**
      * Deletes a Room entity.
      *
-     * @Route(":{id}", name="room_delete", requirements={
+     * @Route("/{id}/delete", name="room_delete", requirements={
      * "id": "\d+"
      * })
      * @Method("DELETE")

@@ -93,7 +93,7 @@ class UserAdmController extends Controller
     /**
      * Finds and displays a Room entity.
      *
-     * @Route(":{id}", name="admin_user_show", requirements={
+     * @Route("/{id}", name="admin_user_show", requirements={
      * "id": "\d+"
      * })
      * @Method("GET")
@@ -116,7 +116,7 @@ class UserAdmController extends Controller
     }
 
     /**
-     * @Route(":{id}/edit", name="admin_user_edit", requirements={
+     * @Route("/{id}/edit", name="admin_user_edit", requirements={
      * "id": "\d+"
      * })
      * @Method({"GET", "POST"})
@@ -170,7 +170,7 @@ class UserAdmController extends Controller
     }
 
     /**
-     * @Route(":{id}/changepass", name="admin_user_changepass", requirements={
+     * @Route("/{id}/changepass", name="admin_user_changepass", requirements={
      * "id": "\d+"
      * })
      * @Method({"GET", "POST"})
@@ -226,7 +226,7 @@ class UserAdmController extends Controller
     }
 
     /**
-     * @Route(":{id}/delete", name="admin_user_delete", requirements={
+     * @Route("/{id}/delete", name="admin_user_delete", requirements={
      * "id": "\d+"
      * })
      * @Method({"GET", "POST", "DELETE"})

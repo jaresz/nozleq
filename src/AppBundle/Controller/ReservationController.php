@@ -59,7 +59,7 @@ class ReservationController extends Controller
     /**
      * Finds and displays a Reservation entity.
      *
-     * @Route(":{id}", name="reservation_show", requirements={
+     * @Route("/{id}", name="reservation_show", requirements={
      * "id": "\d+"
      * })
      * @Method("GET")
@@ -88,7 +88,7 @@ class ReservationController extends Controller
     /**
      * Finds and displays a Reservation entity.
      *
-     * @Route(":{id}/pay", name="reservation_pay", requirements={
+     * @Route("/{id}/pay", name="reservation_pay", requirements={
      * "id": "\d+"
      * })
      * @Method({"GET", "POST"})
@@ -134,7 +134,7 @@ class ReservationController extends Controller
     /**
      * Displays a form to edit an existing Reservation entity.
      *
-     * @Route(":{id}/edit", name="reservation_edit", requirements={
+     * @Route("/{id}/edit", name="reservation_edit", requirements={
      * "id": "\d+"
      * })
      * @Method({"GET", "POST"})
@@ -167,7 +167,7 @@ class ReservationController extends Controller
     /**
      * Deletes a Reservation entity.
      *
-     * @Route(":{id}", name="reservation_delete", requirements={
+     * @Route("/{id}", name="reservation_delete", requirements={
      * "id": "\d+"
      * })
      * @Method("DELETE")

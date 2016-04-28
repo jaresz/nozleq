@@ -26,7 +26,11 @@
 		"twitter/bootstrap" : "3.3.6",
 		"components/jquery" : "1.12.1",
 		"symfony/assetic-bundle" : "~2.8",
-		"stof/doctrine-extensions-bundle" : "1.2.2"
+		"stof/doctrine-extensions-bundle" : "1.2.2",
+		"friendsofsymfony/rest-bundle": "^1.7",
+		"jms/serializer-bundle": "^1.1",
+		"nelmio/api-doc-bundle": "^2.12",
+		"friendsofsymfony/oauth-server-bundle": "^1.5"
 	},
 	"require-dev" : {
 		"sensio/generator-bundle" : "~3.0",

@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Entity\Repository;
 
 /**
@@ -14,58 +13,113 @@ class RoomRepository extends \Doctrine\ORM\EntityRepository
     public function getRoomsReservedOn($reservarionDay)
     {
         $qb = $this->createQueryBuilder('a')
-        ->select([
+            ->select([
             'Reservation',
             'Room'
         ])
-        ->from('AppBundle\Entity\Reservation', 'Reservation')
-        ->leftJoin('Reservation.resource', 'Room')
-        ->where("Reservation.day = :day")
-        ->setParameter('day', $reservarionDay);
-        ///->addOrderBy('Reservation.name', 'ASC')
+            ->from('AppBundle\Entity\Reservation', 'Reservation')
+            ->leftJoin('Reservation.resource', 'Room')
+            ->where("Reservation.day = :day")
+            ->setParameter('day', $reservarionDay);
+        // /->addOrderBy('Reservation.name', 'ASC')
         //
         
         return $qb->getQuery()->getResult();
-        
     }
-    
 
     /**
      * Zwraca wolne pokoje danego dnia
-     * @param date $day
+     * 
+     * @param date $day            
      */
     public function getFreeRooms($day)
     {
         $qb = $this->createQueryBuilder('b')
-        ->select('Room')
-        ->from('AppBundle:Room', 'Room')
-        ->where('Room NOT IN (
+            ->select('Room')
+            ->from('AppBundle:Room', 'Room')
+            ->where('Room NOT IN (
                     SELECT Res.id
                     FROM AppBundle:Reservation Rez,
                     AppBundle:Resource Res
                     WHERE DATE_DIFF(Rez.day, :day)<1 AND Rez.resource = Res
                 )')
-                    ->setParameter('day', $day)
-                    ->addOrderBy('Room.name', 'ASC');
-    
-                    return  $qb->getQuery()->getResult();
+            ->setParameter('day', $day)
+            ->addOrderBy('Room.name', 'ASC');
+        
+        return $qb->getQuery()->getResult();
     }
-    
+
     public function getRoomsAvailabilitiesOn($reservarionDay)
     {
         $qb = $this->createQueryBuilder('a')
-        ->select([
+            ->select([
             'Room',
-            'Reservation',
+            'Reservation'
         ])
-        ->from('AppBundle\Entity\Reservation', 'Reservation')
-        ->leftJoin('Reservation.resource', 'Room')
-        //->where("Reservation.day = :day")
-        //->setParameter('day', $reservarionDay)
-        ///->addOrderBy('Reservation.name', 'ASC')
+            ->from('AppBundle\Entity\Reservation', 'Reservation')
+            ->leftJoin('Reservation.resource', 'Room');
+        // ->where("Reservation.day = :day")
+        // ->setParameter('day', $reservarionDay)
+        // /->addOrderBy('Reservation.name', 'ASC')
         //
-        ;
+        
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Przekształca obiekt w prostą tablicę
+     * z podstawowymi danymi
+     * 
+     * @return array
+     */
+    public function obj2array($obj)
+    {
+        if (!$obj) return;
+        $otab = [
+            'id' => $obj->getId(),
+            'name' => $obj->getName(),
+            'created' => $obj->getCreated(),
+            'updated' => $obj->getUpdated(),
+            'description' => $obj->getDescription(),
+            'capacity' => $obj->getCapacity(),
+            'price' => $obj->getPrice(),
+            'minibar' => $obj->getMinibar(),
+            'airConditioned' => $obj->getAirConditioned()
+        ];
+        
+        return $otab;
+    }
+
+    /**
+     * Zwraca tablicę z podstawowumi polami na podstawie obiektu
+     * 
+     * @param
+     *            zbiór pokoi $objlist
+     */
+    public function getBaseFieldsFromList($objlist)
+    {
+        if (!$objlist) return;
+        $ntab = [];
+        if (count($objlist))
+        foreach ($objlist as $obj)
+            $ntab[] = $this->obj2array($obj);
+        
+        return $ntab;
+    }
     
+    /**
+     * Zwraca tablice tablic z podstawowymi danymi obiektów
+     */
+    public function cgetA()
+    {
+       return $this->getBaseFieldsFromList($this->findAll());
+    }
+    
+    /**
+     * Zwraca tablice tablic z podstawowymi danymi obiektów
+     */
+    public function getA($idr)
+    {
+        return $this->obj2array( $this->find($idr) );
     }
 }

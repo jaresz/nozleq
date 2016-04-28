@@ -25,7 +25,9 @@ class Resource
     protected $price;
     
     /**
-     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="resource")
+     * Rezerwacje zasobu
+     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="resource", cascade={"remove"})
+     * Usuwając zasób usuwamy jego rezerwacje
      */
     protected $reservations;
 

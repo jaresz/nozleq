@@ -1,17 +1,14 @@
 <?php
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\User;
+
 use AppBundle\Form\Type\RoomType;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Controller\Annotations\RequestParam;
-
 use AppBundle\Entity\Room;
-use Symfony\Component\HttpFoundation\Response;
+
 /**
  * @RouteResource("room")
  */

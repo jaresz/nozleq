@@ -22,6 +22,7 @@ class Payment
     /**
      * Rezerwacja
      * @ORM\ManyToOne(targetEntity="Reservation", inversedBy="payments")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotBlank()
      */
     protected $reservation;

@@ -11,7 +11,7 @@ Zalecane 5.6 lub 7.0
 Instrukcja instalacji
 --------------
 ### Przed instalacją
-* należy przejść do katalogu nadzrzędnego do katalogu w któm będzie instalowane oprogramowanie
+* należy przejść do katalogu nadzrzędnego do katalogu w którym będzie instalowane oprogramowanie
 * stworzyć bazę danych - o dane dostępowe do niej zapyta się composer
 
 ### Instalacja
@@ -50,11 +50,18 @@ username=admin
 password=RazZimelen(ioWy)45!
 ```
 gdzie 
+
+password - to typ uwierzytelniania - nie należy tego zamieniać na swoje hasło - w tej formie ma być zapisane, 
+
 CLIENT to numer klienta z tokenem np. 1_3q1qxsiq7q4g0g00cksg80goc44c4cogg8owkskcco4owcwss0
+
 SECRET - wygenerowany poprzednim poleceniem - np. 5wcpu8aowls84wsgg0ccw08gk8cowssc8gcwsw0wsw8s8kkc4s
+
 admin to nazwa użytkownika
+
 RazZimelen(ioWy)45! to jego hasło
-Użytkownik musi mieć ROLE_ADMIN
+
+!Użytkownik musi mieć ROLE_ADMIN
 
 ### Adresy RestAPI
 ```

@@ -37,9 +37,17 @@ Dodanie klienta oAuth (zakres typów uprawnień można ograniczyć do potrzeb):
 php app/console acme:oauth-server:client:create --redirect-uri="http://127.0.0.1:8000/" --grant-type="authorization_code" --grant-type="password" --grant-type="refresh_token" --grant-type="token" --grant-type="client_credentials"
 ```
 
-Wygenerowanie tokenu sesji
+Tokenu sesji pozyskujemy z adresu 
 ```shell
-http POST http://localhost:8000/app_dev.php/oauth/v2/token grant_type=password client_id=CLIENT client_secret=SECRET username=admin password=RazZimelen(ioWy)45!
+http://localhost:8000/app_dev.php/oauth/v2/token
+```
+metodą POST, podając
+```
+grant_type=password
+client_id=CLIENT
+client_secret=SECRET
+username=admin
+password=RazZimelen(ioWy)45!
 ```
 gdzie 
 CLIENT to numer klienta z tokenem np. 1_3q1qxsiq7q4g0g00cksg80goc44c4cogg8owkskcco4owcwss0

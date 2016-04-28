@@ -62,7 +62,7 @@
 	</div>
 	<div class="col-sm-2">
 	{% if not is_granted("ROLE_CLERK") %}	
-		<a href="javascript:alert('Automatyczne opłacanie nie funkcjonuje. Zrób przelew.');" class="btn btn-default btn-block">Opłać</a>
+		<a href="{{ path('reservation_pay', {'id': reservation.id}) }}" class="btn btn-default btn-block">Opłać</a>
 	{% endif %}
 	</div>
 	<div class="col-sm-2">

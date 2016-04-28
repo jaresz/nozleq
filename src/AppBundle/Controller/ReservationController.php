@@ -118,6 +118,7 @@ class ReservationController extends Controller
                     $em->persist($payment);
                     $em->flush();
                 }
+                return $this->redirectToRoute('reservation_show', ['id'=>$id]);
             }
             
             return $this->render('reservation/pay.html.twig', array(
